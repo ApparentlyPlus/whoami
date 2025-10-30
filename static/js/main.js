@@ -1,4 +1,7 @@
+/* --- Navigation Toggle --- */
+// Wait for the DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', () => {
+// ... existing navigation toggle code ...
     const menuToggleBtn = document.getElementById('menu-toggle-btn');
     const mainMenu = document.getElementById('main-menu');
 
@@ -15,7 +18,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 });
 
+/* --- Terminal Emulator Code Below --- */
+
 var TerminalEmulator = {
+// ... existing TerminalEmulator object code ...
   init: function(screen) {
     var inst = Object.create(this);
     inst.screen = screen;
@@ -122,6 +128,12 @@ var TerminalEmulator = {
 };
 
 
+/*
+ * * This is where the magic happens
+ *
+ */ 
+
+// ... existing terminal magic code ...
 var TE = TerminalEmulator.init(document.getElementById('screen'));
 
 TE.wait(1000, false)
@@ -135,9 +147,79 @@ TE.wait(1000, false)
   .then( TE.wait.bind(TE, 1000, false) )
   .then( TE.enterInput.bind(TE, 'bash FavoriteLanguages.sh') )
   .then( TE.enterCommand.bind(TE) )
-  .then( TE.enterResponse.bind(TE, 'Python, C, C#') )
+  .then( TE.enterResponse.bind(TE, 'Python, C, Rust, Go') )
   .then( TE.wait.bind(TE, 1000, false) )
   .then( TE.enterInput.bind(TE, 'cat recruiter_note.txt') )
   .then( TE.enterCommand.bind(TE) )
   .then( TE.enterResponse.bind(TE, 'This website serves as my interactive autobiography. Welcome.') )
   .then( TE.reset.bind(TE) );
+
+
+/* --- NEW PARTICLES.JS CONFIG --- */
+
+document.addEventListener('DOMContentLoaded', () => {
+  particlesJS('particles-js', {
+    "particles": {
+      "number": {
+        "value": 60, // Not too many
+        "density": {
+          "enable": true,
+          "value_area": 800
+        }
+      },
+      "color": {
+        "value": "#0f0" // Your neon green
+      },
+      "shape": {
+        "type": "circle"
+      },
+      "opacity": {
+        "value": 0.4, // Dim
+        "random": true, // Random opacity
+        "anim": {
+          "enable": true, // Enable flickering
+          "speed": 0.8,
+          "opacity_min": 0.05,
+          "sync": false
+        }
+      },
+      "size": {
+        "value": 2,
+        "random": true,
+        "anim": {
+          "enable": false
+        }
+      },
+      "line_linked": {
+        "enable": true, // Enable connecting lines
+        "distance": 150,
+        "color": "#0f0", // Neon green
+        "opacity": 0.1, // Very dim lines
+        "width": 1
+      },
+      "move": {
+        "enable": true,
+        "speed": 0.5, // Move slowly
+        "direction": "none",
+        "random": true,
+        "straight": false,
+        "out_mode": "out",
+        "bounce": false
+      }
+    },
+    "interactivity": {
+      "detect_on": "canvas",
+      "events": {
+        "onhover": {
+          "enable": false // No interactivity
+        },
+        "onclick": {
+          "enable": false
+        },
+        "resize": true
+      }
+    },
+    "retina_detect": true
+  });
+});
+
