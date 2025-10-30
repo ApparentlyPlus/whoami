@@ -98,6 +98,15 @@ a:hover {
     font-weight: bold;
     color: rgb(255, 255, 255);
     font-family: 'JetBrains Mono', monospace;
+    display: inline;
+
+}
+
+/* Hide on small screens */
+@media (max-width: 768px) {
+    .header-wb-text {
+        display: none;
+    }
 }
 
 .header-text {
@@ -119,7 +128,7 @@ a:hover {
 }
 
 .logo:hover {
-	text-shadow: 0 0 10px #800080;
+	text-shadow: 0 0 10px #33ff00;
 	transform: translateX(-50%) scale(1.05);
 }
 
@@ -226,6 +235,8 @@ a:hover {
 	transition: all 0.3s ease;
 }
 
+
+
 .menu-toggle.is-active .hamburger-bar:nth-child(1) {
 	transform: rotate(45deg) translate(6px, 6px);
 }
@@ -281,6 +292,14 @@ a:hover {
 	color: #800080;
 	background-color: #222;
 	transform: scale(1.05);
+}
+
+.menu-title {
+    color: #ac00ac;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-align: center;
 }
 
 /* === LANDING LAYOUT === */
