@@ -213,7 +213,7 @@ a:hover {
   position: fixed;
   top: 0;
   right: 0;
-  width: 250px;
+  width: 300px;
   max-width: 80vw;
   height: 100vh;
   z-index: 1000;
@@ -240,8 +240,8 @@ a:hover {
 }
 
 .menu-title {
-  color: #ac00ac;
-  text-shadow: 0 0 5px #ac00ac;
+  color: #33ff00;
+  text-shadow: 0 0 5px #33ff00;
   font-size: 1.2rem;
   font-weight: 700;
   margin-bottom: 1rem;
@@ -258,7 +258,7 @@ a:hover {
 }
 
 .main-menu a:hover {
-  color: #800080;
+  color: #33ff00;
   background-color: #222;
   transform: scale(1.05);
 }
@@ -514,7 +514,7 @@ body.animation-running #landing-terminal {
 
 .project-link-wrapper:hover .project-title {
   color: #0f0;
-  text-decoration: underline;
+  text-decoration: none;
 }
 
 .project-title {

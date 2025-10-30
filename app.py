@@ -18,9 +18,9 @@ def about():
 def projects():
     return render_template('projects.html')
 
-@app.route('/blog')
+@app.route('/accolades')
 def blog():
-    return render_template('blog.html')
+    return render_template('accolades.html')
 
 @app.route('/resume') # Placeholder for now
 def resume():
