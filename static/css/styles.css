@@ -5,6 +5,17 @@ body {
     line-height: 1.6;
 }
 
+::selection {
+  background-color: #800080; /* Magenta */
+  color: #FFFFFF;
+}
+
+/* For Firefox */
+::-moz-selection {
+  background-color: #800080; /* Magenta */
+  color: #FFFFFF;
+}
+
 a {
     color: #0f0; /* neon green */
     text-decoration: none;
@@ -14,7 +25,7 @@ a:hover {
 }
 
 .container {
-    max-width: 800px;
+    max-width: 1100px; /* Increased from 800px */
     margin: auto;
     padding: 2rem;
 }
@@ -30,7 +41,192 @@ a:hover {
 }
 
 .highlight {
-    background-color: #8000ff; /* purple highlight */
+    background-color: #800080; /* kewl purple */
     color: #fff;
     padding: 0 0.25rem;
+}
+
+.screen {
+  overflow: hidden;
+  background: #000000;
+  border: 1px solid #333; /* Added to define the screen edge */
+  position: relative; /* Added for child element positioning */
+  min-height: 450px; /* Added to give it space */
+}
+
+.terminal_emulator {
+  width: 100%;
+  
+  padding: 40px;
+  font-size: 20px;
+  line-height: 25px;
+  box-sizing: border-box;
+  text-align:left;
+  
+  font-family: monospace;
+  font-weight: 700;  
+  
+  color: #99ff99;
+}
+
+.terminal_emulator__field,
+.terminal_emulator__command {
+  position: relative;
+  padding: 0 1em;
+  margin: 0 0 9px 0;
+}
+
+/* Converted SASS-style nesting */
+.terminal_emulator__field:before,
+.terminal_emulator__field:after,
+.terminal_emulator__command:before,
+.terminal_emulator__command:after {
+  position: absolute;
+}
+
+/* Converted SASS-style nesting */
+.terminal_emulator__field:before,
+.terminal_emulator__command:before {
+  left:0;
+  top: 0;
+  content:">";
+}
+
+.terminal_emulator__response,
+.terminal_emulator__command b{
+  padding-bottom: 9px;
+}
+
+.terminal_emulator__field {
+  display: inline-block;
+  min-width: 1em;
+  min-height: 1.5em;
+  box-sizing: border-box;
+}
+
+/* Converted SASS-style nesting */
+.terminal_emulator__field:after {
+  right: 0;
+  bottom: 0.25em;
+  
+  content:"";
+  width: 1em;
+  height: 1.5em;
+  background:#99ff99;
+  
+  animation: caretBlink 1s infinite;
+}
+
+/* Converted SASS-style nesting */
+.terminal_emulator__field.waiting {
+  padding-left: 0;
+  padding-right: 0;
+}
+
+/* Converted SASS-style nesting */
+.terminal_emulator__field.waiting:before {
+  display: none;
+}
+
+@keyframes caretBlink {
+  0% {
+    opacity: 0;
+  }
+  
+  50% {
+    opacity: 0;
+  }
+  
+  51% {
+    opacity: 1;
+  }
+  
+  100% {
+    opacity: 1;
+  }
+}
+
+.landing-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two equal columns */
+    gap: 3rem;
+    align-items: start; /* Changed from 'center' to 'start' */
+    min-height: 80vh;
+}
+
+.landing-profile-pic {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%; /* Makes it circular */
+    border: 3px solid #0f0; /* Neon green border */
+    margin-bottom: 1.5rem;
+    object-fit: cover; /* Ensures the image covers the area */
+}
+
+/* This rule applies to screens 992px wide or smaller (tablets/mobile) */
+@media (max-width: 992px) {
+    .landing-grid {
+        /* Stack to one column */
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .landing-left {
+        /* Center all content inside the left block on mobile */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+}
+
+.landing-left {
+    color: #e0e0e0;
+    line-height: 1.7;
+}
+
+.landing-name {
+    font-size: 2.5rem; /* 40px */
+    color: #ffffff;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.landing-subtitle {
+    font-size: 1.25rem; /* 20px */
+    color: #0f0; /* Neon green */
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+}
+
+.landing-bio {
+    font-size: 1rem; /* 16px */
+    margin-bottom: 2rem;
+    max-width: 450px; /* Keep the bio line-length readable */
+}
+
+.landing-nav {
+    display: flex;
+    flex-direction: column; /* Stack links vertically */
+    gap: 0.75rem; /* Space between links */
+}
+
+.landing-nav a {
+    color: #e0e0e0; /* Default color */
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.landing-nav a:hover {
+    color: #0f0; /* Highlight on hover */
+    text-decoration: none;
+    transform: translateX(5px); /* Add a slight "push" effect */
+}
+
+/* Ensure the terminal screen in the right column behaves */
+.landing-right .screen {
+    width: 100%;
+    /* The min-height: 450px you already have is perfect */
 }

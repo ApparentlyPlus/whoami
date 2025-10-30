@@ -1,13 +1,24 @@
 {% extends "base.html" %}
-{% block title %}Who is ApparentlyPlus?{% endblock %}
-{% block content %}
-<section class="space-y-4">
-    <h2 class="text-3xl text-green-400">> Welcome</h2>
-    <p>Hi, I'm Panagiotis Chatzikallias — aka apparently_plus. I build operating systems, compilers, and cryptography tools.</p>
-    <p>This is where I log my experiments, projects, and thoughts.</p>
+{% block title %}whoami{% endblock %}
 
-    <div class="mt-6">
-        <a href="/projects" class="border border-green-400 text-green-400 px-3 py-1 hover:bg-green-400 hover:text-black transition">view projects</a>
+{% block content %}
+<div class="landing-grid">
+    <div class="landing-left">
+        
+        <img src="{{ url_for('static', filename='/assets/avatar.png') }}" alt="Panagiotis Chatzikallias" class="landing-profile-pic">
+
+        <h1 class="landing-name">Panagiotis Chatzikallias</h1>
+        <h2 class="landing-subtitle">Software Engineer // Systems Designer</h2>
+        <p class="landing-bio">
+            I'm a developer passionate about building operating systems, compilers, and cryptography tools. This site is where I log my experiments, projects, and thoughts.
+        </p>
+        
+        </div>
+    
+    <div class="landing-right">
+        <div class="screen">
+            <div id="screen" class="terminal_emulator"></div>
+        </div>
     </div>
-</section>
+</div>
 {% endblock %}

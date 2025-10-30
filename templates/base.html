@@ -14,13 +14,15 @@
         <a href="/">Home</a>
         <a href="/projects">Projects</a>
         <a href="/blog">Blog</a>
-        <a href="/contact">Contact</a>
+        <a href="/resume">Resume</a>
     </nav>
 </header>
 
 <main class="container">
     {% block content %}{% endblock %}
 </main>
+
+<script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
 
 </body>
 </html>
