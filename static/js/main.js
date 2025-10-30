@@ -1,19 +1,66 @@
-/* --- Navigation Toggle --- */
-// Wait for the DOM to be fully loaded
+/* --- Navigation Toggle & Animations --- */
 document.addEventListener('DOMContentLoaded', () => {
-// ... existing navigation toggle code ...
-    const menuToggleBtn = document.getElementById('menu-toggle-btn');
-    const mainMenu = document.getElementById('main-menu');
+	// --- Navigation Toggle ---
+	const menuToggleBtn = document.getElementById('menu-toggle-btn');
+	const mainMenu = document.getElementById('main-menu');
+	const pageOverlay = document.getElementById('page-overlay'); // Get the overlay
 
-    if (menuToggleBtn && mainMenu) {
-        menuToggleBtn.addEventListener('click', () => {
-            // Toggle the 'is-active' class on both the button and the menu
-            menuToggleBtn.classList.toggle('is-active');
-            mainMenu.classList.toggle('is-active');
+	// Check if all elements exist
+	if (menuToggleBtn && mainMenu && pageOverlay) {
+		
+		// Toggle menu on button click
+		menuToggleBtn.addEventListener('click', () => {
+			menuToggleBtn.classList.toggle('is-active');
+			mainMenu.classList.toggle('is-active');
+			pageOverlay.classList.toggle('is-active'); // Toggle overlay
+			
+			const isExpanded = menuToggleBtn.getAttribute('aria-expanded') === 'true';
+			menuToggleBtn.setAttribute('aria-expanded', !isExpanded);
+		});
 
-            // Update ARIA attribute for accessibility
-            const isExpanded = menuToggleBtn.getAttribute('aria-expanded') === 'true';
-            menuToggleBtn.setAttribute('aria-expanded', !isExpanded);
+		// Close menu when clicking the overlay
+		pageOverlay.addEventListener('click', () => {
+			menuToggleBtn.classList.remove('is-active');
+			mainMenu.classList.remove('is-active');
+			pageOverlay.classList.remove('is-active');
+			menuToggleBtn.setAttribute('aria-expanded', 'false');
+		});
+	}
+
+    // --- Landing Page Animation ---
+    const landingGrid = document.getElementById('landing-grid');
+
+    if (landingGrid) {
+        const terminalScreen = document.querySelector('#landing-terminal .screen');
+
+        // 1. Start the initial fade-in/pop-in animation
+        document.body.classList.add('animation-running');
+
+        // 2. Start the terminal typing animation after its CSS pop-in delay
+        setTimeout(() => {
+            startTerminalAnimation();
+        }, 2400); // 2400ms = 2.4s
+    }
+
+
+    // --- Particles.js Config ---
+    // Make sure the particles-js div exists
+    if (document.getElementById('particles-js')) {
+        particlesJS('particles-js', {
+            "particles": {
+                "number": { "value": 60, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": "#0f0" },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.4, "random": true, "anim": { "enable": true, "speed": 0.8, "opacity_min": 0.05, "sync": false } },
+                "size": { "value": 2, "random": true, "anim": { "enable": false } },
+                "line_linked": { "enable": true, "distance": 150, "color": "#0f0", "opacity": 0.1, "width": 1 },
+                "move": { "enable": true, "speed": 0.5, "direction": "none", "random": true, "straight": false, "out_mode": "out", "bounce": false }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": { "onhover": { "enable": false }, "onclick": { "enable": false }, "resize": true }
+            },
+            "retina_detect": true
         });
     }
 });
@@ -133,93 +180,34 @@ var TerminalEmulator = {
  *
  */ 
 
-// ... existing terminal magic code ...
-var TE = TerminalEmulator.init(document.getElementById('screen'));
+// We must initialize the terminal emulator object first
+// We check if the 'screen' element exists before init
+const terminalScreenElement = document.getElementById('screen');
+var TE;
+if (terminalScreenElement) {
+    TE = TerminalEmulator.init(terminalScreenElement);
+}
 
-TE.wait(1000, false)
-  .then( TE.enterInput.bind(TE, 'whoami') )
-  .then( TE.enterCommand.bind( TE ) )
-  .then( TE.enterResponse.bind(TE, 'Panagiotis Chatzikallias (aka ApparentlyPlus)') )
-  .then( TE.wait.bind(TE, 1000, false) )
-  .then( TE.enterInput.bind(TE, 'bash whatAreMyInterests.sh') )
-  .then( TE.enterCommand.bind(TE) )
-  .then( TE.enterResponse.bind(TE, 'Backend Development, Systems Design, Cybersecurity, Compilers') )
-  .then( TE.wait.bind(TE, 1000, false) )
-  .then( TE.enterInput.bind(TE, 'bash FavoriteLanguages.sh') )
-  .then( TE.enterCommand.bind(TE) )
-  .then( TE.enterResponse.bind(TE, 'Python, C, Rust, Go') )
-  .then( TE.wait.bind(TE, 1000, false) )
-  .then( TE.enterInput.bind(TE, 'cat recruiter_note.txt') )
-  .then( TE.enterCommand.bind(TE) )
-  .then( TE.enterResponse.bind(TE, 'This website serves as my interactive autobiography. Welcome.') )
-  .then( TE.reset.bind(TE) );
-
-
-/* --- NEW PARTICLES.JS CONFIG --- */
-
-document.addEventListener('DOMContentLoaded', () => {
-  particlesJS('particles-js', {
-    "particles": {
-      "number": {
-        "value": 60, // Not too many
-        "density": {
-          "enable": true,
-          "value_area": 800
-        }
-      },
-      "color": {
-        "value": "#0f0" // Your neon green
-      },
-      "shape": {
-        "type": "circle"
-      },
-      "opacity": {
-        "value": 0.4, // Dim
-        "random": true, // Random opacity
-        "anim": {
-          "enable": true, // Enable flickering
-          "speed": 0.8,
-          "opacity_min": 0.05,
-          "sync": false
-        }
-      },
-      "size": {
-        "value": 2,
-        "random": true,
-        "anim": {
-          "enable": false
-        }
-      },
-      "line_linked": {
-        "enable": true, // Enable connecting lines
-        "distance": 150,
-        "color": "#0f0", // Neon green
-        "opacity": 0.1, // Very dim lines
-        "width": 1
-      },
-      "move": {
-        "enable": true,
-        "speed": 0.5, // Move slowly
-        "direction": "none",
-        "random": true,
-        "straight": false,
-        "out_mode": "out",
-        "bounce": false
-      }
-    },
-    "interactivity": {
-      "detect_on": "canvas",
-      "events": {
-        "onhover": {
-          "enable": false // No interactivity
-        },
-        "onclick": {
-          "enable": false
-        },
-        "resize": true
-      }
-    },
-    "retina_detect": true
-  });
-});
+// This function will be called by the animation orchestrator
+function startTerminalAnimation() {
+    if (TE) {
+        TE.wait(500, false) // Short delay after border anim
+          .then( TE.enterInput.bind(TE, 'whoami') )
+          .then( TE.enterCommand.bind( TE ) )
+          .then( TE.enterResponse.bind(TE, 'Panagiotis Chatzikallias (aka ApparentlyPlus)') )
+          .then( TE.wait.bind(TE, 1000, false) )
+          .then( TE.enterInput.bind(TE, 'bash whatAreMyInterests.sh') )
+          .then( TE.enterCommand.bind(TE) )
+          .then( TE.enterResponse.bind(TE, 'Backend Development, Systems Design, Cybersecurity, Compilers') )
+          .then( TE.wait.bind(TE, 1000, false) )
+          .then( TE.enterInput.bind(TE, 'bash FavoriteLanguages.sh') )
+          .then( TE.enterCommand.bind(TE) )
+          .then( TE.enterResponse.bind(TE, 'Python, C, Rust, Go') )
+          .then( TE.wait.bind(TE, 1000, false) )
+          .then( TE.enterInput.bind(TE, 'cat recruiter_note.txt') )
+          .then( TE.enterCommand.bind(TE) )
+          .then( TE.enterResponse.bind(TE, 'This website serves as my interactive autobiography. Welcome.') )
+          .then( TE.reset.bind(TE) );
+    }
+}
 

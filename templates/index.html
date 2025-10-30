@@ -2,8 +2,11 @@
 {% block title %}whoami{% endblock %}
 
 {% block content %}
-<div class="landing-grid">
-    <div class="landing-left">
+<!-- Added id="landing-grid" -->
+<div class="landing-grid" id="landing-grid">
+    
+    <!-- Added id="landing-left" -->
+    <div class="landing-left" id="landing-left">
         
         <img src="{{ url_for('static', filename='assets/avatar.png') }}" alt="Panagiotis Chatzikallias" class="landing-profile-pic">
 
@@ -15,10 +18,14 @@
         
     </div>
     
-    <div class="landing-right">
+    <!-- Added id="landing-terminal" -->
+    <div class="landing-right" id="landing-terminal">
+        <!-- This is the terminal "box" -->
         <div class="screen">
+            <!-- The terminal text content area -->
             <div id="screen" class="terminal_emulator"></div>
         </div>
     </div>
 </div>
 {% endblock %}
+

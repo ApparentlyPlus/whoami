@@ -1,315 +1,324 @@
 body {
-    background-color: #000;
-    color: #e0e0e0;
-    font-family: 'JetBrains Mono', monospace;
-    line-height: 1.6;
+	background-color: hsl(0, 0%, 2%);
+	color: #e0e0e0;
+	font-family: 'JetBrains Mono', monospace;
+	line-height: 1.6;
 }
+
+/* === PARTICLES === */
 #particles-js {
-    position: fixed; /* Sit in the background */
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    z-index: -1; /* Place it behind all other content */
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	z-index: -1;
 }
 
-/* For most browsers */
+/* === SELECTION === */
 ::selection {
-  background-color: #FF00FF; /* Magenta */
-  color: #FFFFFF; /* White text for good contrast */
+	background-color: #800080;
+	color: #FFFFFF;
 }
 
-/* For Firefox */
 ::-moz-selection {
-  background-color: #FF00FF; /* Magenta */
-  color: #FFFFFF; /* White text for good contrast */
+	background-color: #800080;
+	color: #FFFFFF;
 }
 
+/* === OVERLAY === */
+.overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.6);
+	z-index: 999;
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity 0.3s ease-out, visibility 0.3s ease-out;
+}
+
+.overlay.is-active {
+	opacity: 1;
+	visibility: visible;
+}
+
+/* === LINKS === */
 a {
-    color: #0f0; /* neon green */
-    text-decoration: none;
+	color: #0f0;
+	text-decoration: none;
 }
+
 a:hover {
-    text-decoration: underline;
+	text-decoration: underline;
 }
 
+/* === LAYOUT === */
 .container {
-    max-width: 1100px;
-    margin: auto;
-    padding: 2rem;
+	max-width: 1100px;
+	margin: auto;
+	padding: 2rem;
 }
 
-.card {
-    border: 1px solid #333;
-    padding: 1rem;
-    margin-bottom: 2rem;
-}
-
-.card h2 {
-    color: #fff;
-}
-
-.highlight {
-    background-color: #8000ff; /* purple highlight */
-    color: #fff;
-    padding: 0 0.25rem;
-}
-
-/* --- NEW HEADER & MENU STYLES --- */
-
+/* === HEADER === */
 .site-header {
-    padding: 1rem 2rem; /* Give it space */
-    border-bottom: 1px solid #333;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    position: relative; /* For positioning the dropdown */
+	padding: 1rem 2rem;
+	border-bottom: 1px solid #333;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	position: relative;
 }
 
 .logo {
-    font-weight: bold;
-    color: #0f0; /* Neon green */
-    font-size: 1.2rem;
-    z-index: 1001; /* Keep logo above menu */
+	font-weight: bold;
+	color: #0f0;
+	font-size: 1.2rem;
+	z-index: 1001;
 }
 
-/* Hamburger Menu Button Styles */
+/* === MENU === */
 .menu-toggle {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    width: 30px;
-    height: 25px;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    z-index: 1001; /* Above the menu */
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	width: 30px;
+	height: 25px;
+	background: transparent;
+	border: none;
+	cursor: pointer;
+	padding: 0;
+	z-index: 1001;
 }
 
 .hamburger-bar {
-    width: 100%;
-    height: 3px;
-    background-color: #e0e0e0;
-    border-radius: 2px;
-    transition: all 0.3s ease;
+	width: 100%;
+	height: 3px;
+	background-color: #e0e0e0;
+	border-radius: 2px;
+	transition: all 0.3s ease;
 }
 
-/* Hamburger "X" animation */
 .menu-toggle.is-active .hamburger-bar:nth-child(1) {
-    transform: rotate(45deg) translate(6px, 6px);
+	transform: rotate(45deg) translate(6px, 6px);
 }
+
 .menu-toggle.is-active .hamburger-bar:nth-child(2) {
-    opacity: 0;
+	opacity: 0;
 }
+
 .menu-toggle.is-active .hamburger-bar:nth-child(3) {
-    transform: rotate(-45deg) translate(6px, -6px);
+	transform: rotate(-45deg) translate(6px, -6px);
 }
 
-/* Menu Container Styles */
 .main-menu-container {
-    /* Hide by default */
-    max-height: 0;
-    overflow: hidden;
-    
-    /* Positioning */
-    position: absolute;
-    top: 100%; /* Position right below the header */
-    right: 0; /* Align to the right */
-    width: 250px;
-    
-    /* Style */
-    background-color: #111; /* Dark background */
-    border: 1px solid #333;
-    border-top: none;
-    
-    /* Animation */
-    transition: max-height 0.3s ease-out;
-    z-index: 1000;
+	position: fixed;
+	top: 0;
+	right: 0;
+	height: 100vh;
+	
+	transform: translateX(100%);
+	transition: transform 0.3s ease-out;
+
+	width: 250px;
+	background-color: #111;
+	border: 1px solid #333;
+	z-index: 1000;
+	
+	border-right: none;
+	border-top: none; 
+	border-bottom: none;
 }
 
-/* Expanded state */
 .main-menu-container.is-active {
-    max-height: 500px; /* Animate to this height */
+	transform: translateX(0);
 }
 
-/* Links inside the container */
 .main-menu {
-    display: flex;
-    flex-direction: column; /* Stack links vertically */
-    gap: 0;
-    padding: 1rem;
+	display: flex;
+	flex-direction: column;
+	padding: 1rem;
+	padding-top: 5rem;
 }
 
 .main-menu a {
-    color: #e0e0e0;
-    text-decoration: none;
-    font-weight: 700;
-    padding: 0.75rem 1rem;
-    transition: all 0.2s ease;
-    border-radius: 4px;
+	color: #e0e0e0;
+	text-decoration: none;
+	font-weight: 700;
+	padding: 0.75rem 1rem;
+	transition: all 0.2s ease;
+	border-radius: 4px;
 }
 
 .main-menu a:hover {
-    color: #8000ff; /* Purple */
-    background-color: #222;
-    transform: scale(1.05); /* "pop" */
-    text-decoration: none;
+	color: #800080;
+	background-color: #222;
+	transform: scale(1.05);
 }
 
-
-/* --- LANDING PAGE STYLES --- */
-
+/* === LANDING LAYOUT === */
 .landing-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-    align-items: start;
-    min-height: 80vh;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 3rem;
+	align-items: center;
+	min-height: 80vh;
+}
+
+/* === POP-IN ANIMATIONS === */
+@keyframes pop-in {
+	from {
+		opacity: 0;
+		transform: translateY(20px) scale(0.96);
+	}
+
+	to {
+		opacity: 1;
+		transform: translateY(0) scale(1);
+	}
+}
+
+/* === LEFT SIDE === */
+#landing-left {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+	opacity: 0;
 }
 
 .landing-profile-pic {
     width: 150px;
     height: 150px;
     border-radius: 50%;
-    margin-bottom: 1.5rem;
     object-fit: cover;
+    aspect-ratio: 1 / 1;
 }
 
-.landing-left {
-    color: #e0e0e0;
-    line-height: 1.7;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
+#landing-left .landing-profile-pic,
+#landing-left .landing-name,
+#landing-left .landing-subtitle,
+#landing-left .landing-bio {
+	opacity: 0;
 }
 
-.landing-name {
-    font-size: 2.5rem;
-    color: #ffffff;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
+/* Sequential pop-ins */
+body.animation-running #landing-left {
+	opacity: 1;
 }
 
-.landing-subtitle {
-    font-size: 1.25rem;
-    color: #0f0;
-    font-weight: 700;
-    margin-bottom: 1.5rem;
+body.animation-running #landing-left .landing-profile-pic {
+	animation: pop-in 0.6s ease-out 0.4s forwards;
 }
 
-.landing-bio {
-    font-size: 1rem;
-    margin-bottom: 2rem;
-    max-width: 450px;
+body.animation-running #landing-left .landing-name {
+	animation: pop-in 0.6s ease-out 0.8s forwards;
 }
 
-/* --- TERMINAL STYLES --- */
+body.animation-running #landing-left .landing-subtitle {
+	animation: pop-in 0.6s ease-out 1.2s forwards;
+}
 
+body.animation-running #landing-left .landing-bio {
+	animation: pop-in 0.6s ease-out 1.6s forwards;
+}
+
+/* === RIGHT SIDE (TERMINAL) === */
+#landing-terminal {
+	opacity: 0;
+	transform: translateY(20px);
+	transition: opacity 0.8s ease-out 2.4s, transform 0.8s ease-out 2.4s;
+}
+
+body.animation-running #landing-terminal {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+/* === TERMINAL BOX === */
 .screen {
-  overflow: hidden;
-  background: #000000; /* Match page background, as requested */
-  position: relative;
-  min-height: 450px;
-  border: 1px solid #333; /* The "box around" */
-  border-radius: 8px;
+	overflow: hidden;
+	position: relative;
+	min-height: 450px;
+	border: 1px solid #333;
+	background: #000;
+	opacity: 1;
 }
 
-/* UPDATED: Readjusted padding for the minimal look */
+/* === TERMINAL TEXT === */
 .terminal_emulator {
-  width: 100%;
-  padding: 40px; /* More breathing room */
-  font-size: 20px;
-  line-height: 25px;
-  box-sizing: border-box;
-  text-align:left;
-  
-  font-family: monospace;
-  font-weight: 700;  
-  
-  color: #99ff99;
+	padding: 1.5rem;
+	font-size: 16px;
+	line-height: 1.5;
+	box-sizing: border-box;
+	text-align: left;
+	font-family: 'JetBrains Mono', monospace;
+	font-weight: 700;
+	color: #03be1c;
 }
 
 .terminal_emulator__field,
 .terminal_emulator__command {
-  position: relative;
-  padding: 0 1em;
-  margin: 0 0 9px 0;
-}
-
-.terminal_emulator__field:before,
-.terminal_emulator__field:after,
-.terminal_emulator__command:before,
-.terminal_emulator__command:after {
-  position: absolute;
+	position: relative;
+	padding: 0 1.2em 0 0;
+	margin: 0 0 9px 0;
 }
 
 .terminal_emulator__field:before,
 .terminal_emulator__command:before {
-  left:0;
-  top: 0;
-  content:">";
-}
-
-.terminal_emulator__response,
-.terminal_emulator__command b{
-  padding-bottom: 9px;
+    content: "$ ";
 }
 
 .terminal_emulator__field {
-  display: inline-block;
-  min-width: 1em;
-  min-height: 1.5em;
-  box-sizing: border-box;
+	display: inline-block;
+	min-width: 1em;
+	min-height: 1.5em;
+	box-sizing: border-box;
 }
 
+.terminal_emulator__response {
+	padding-bottom: 9px;
+}
+
+/* This is the caret */
 .terminal_emulator__field:after {
-  right: 0;
-  bottom: 0.25em;
-  
-  content:"";
-  width: 1em;
-  height: 1.5em;
-  background:#99ff99;
-  
-  animation: caretBlink 1s infinite;
-}
-
-.terminal_emulator__field.waiting {
-  padding-left: 0;
-  padding-right: 0;
-}
-
-.terminal_emulator__field.waiting:before {
-  display: none;
+	position: absolute;
+	right: 0;
+	bottom: 0.15em;
+	content: "";
+	width: 0.8em;
+	height: 1.2em;
+	background: #99ff99;
+	animation: caretBlink 1s infinite;
 }
 
 @keyframes caretBlink {
-  0% {
-    opacity: 0;
-  }
-  
-  50% {
-    opacity: 0;
-  }
-  
-  51% {
-    opacity: 1;
-  }
-  
-  100% {
-    opacity: 1;
-  }
+
+	0%,
+	50% {
+		opacity: 0;
+	}
+
+	51%,
+	100% {
+		opacity: 1;
+	}
 }
 
-/* --- RESPONSIVE STYLES --- */
-
+/* === RESPONSIVE === */
 @media (max-width: 992px) {
-    .landing-grid {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
+	.landing-grid {
+		grid-template-columns: 1fr;
+		gap: 2rem;
+	}
+
+	#landing-left {
+		order: 1;
+	}
+
+	#landing-terminal {
+		order: 2;
+	}
 }
-
-
