@@ -2,9 +2,70 @@
 {% block title %}Projects.exe{% endblock %}
 {% block logo_text %}Portfolio & Projects{% endblock %}
 {% block content %}
-<!-- Added id="landing-grid" -->
-<div class="landing-grid" id="landing-grid">
+
+
+<div class="projects-container">
+
+    <h2 class="projects-page-title">Featured Projects / Security Research</h2>
+
+    <article class="project-box">
+        <a href="#" class="project-link-wrapper">
+            <header>
+                <h3 class="project-title">GatOS (Modular Kernel Toolchain)</h3>
+                <p class="project-date">15 October 2025</p>
+            </header>
+            <p class="project-description">
+                A from-scratch modular kernel toolchain designed for building custom operating systems. Features a custom bootloader, memory manager, and a reflective PE loader.
+            </p>
+        </a>
+        <footer class="project-footer">
+            <div class="project-meta">
+                <span>&#128187; Systems Programming</span> <span>&mdash;</span>
+                <span class="author">@ApparentlyPlus</span>
+            </div>
+            <a href="#" class="project-read-more">> Read More</a>
+        </footer>
+    </article>
+
+    <article class="project-box">
+        <a href="#" class="project-link-wrapper">
+            <header>
+                <h3 class="project-title">UniNotes (Full-Stack Collab Platform)</h3>
+                <p class="project-date">20 July 2025</p>
+            </header>
+            <p class="project-description">
+                A full-stack collaborative note-taking platform for students. Built with React, ASP.NET, MongoDB, and SQL, featuring real-time updates and a secure auth system.
+            </p>
+        </a>
+        <footer class="project-footer">
+            <div class="project-meta">
+                <span>&#127760; Full-Stack Dev</span> <span>&mdash;</span>
+                <span class="author">@ApparentlyPlus</span>
+            </div>
+            <a href="#" class="project-read-more">> Read More</a>
+        </footer>
+    </article>
     
+    <article class="project-box">
+        <a href="#" class="project-link-wrapper">
+            <header>
+                <h3 class="project-title">HTTP3 Request Smuggling With Haproxy</h3>
+                <p class="project-date">11 August 2025</p>
+            </header>
+            <p class="project-description">
+                Using Haproxy's CVE-2024-53008 to showcase practical insights into how HTTP3 opens up a whole new attack surface for request smuggling attacks.
+            </pre>
+        </a>
+        <footer class="project-footer">
+            <div class="project-meta">
+                <span>&#128214; 16 min read</span> <span>&mdash;</span>
+                <span class="author blue">@dmosFunk</span>
+                <span>&</span>
+                <span class="author light-purple">@B1ean</span>
+            </div>
+            <a href="#" class="project-read-more">> Read More</a>
+        </footer>
+    </article>
+
 </div>
 {% endblock %}
-

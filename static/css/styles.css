@@ -12,6 +12,10 @@ body, html {
     overflow-y: hidden;
 }
 
+body.projects-page {
+    overflow-y: auto;
+}
+
 /* === PARTICLES === */
 #particles-js {
 	position: fixed;
@@ -468,4 +472,152 @@ body.animation-running #landing-terminal {
 	#landing-terminal {
 		order: 2;
 	}
+}
+
+/* === PROJECTS PAGE === */
+.projects-container {
+    width: 100%;
+    max-width: 1000px; /* Max width for readability, like a blog */
+    margin: 0 auto;
+    padding: 1rem 0;
+    /* Add a pop-in animation similar to the landing page */
+    opacity: 0;
+    animation: pop-in 0.6s ease-out 0.4s forwards;
+}
+
+.projects-page-title {
+    color: #e0e0e0;
+    font-size: 1.2rem;
+    font-weight: 700;
+    text-align: left;
+    margin-bottom: 2rem;
+    /* Matches the "CTF Writeups..." style from the screenshot */
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.project-box {
+    border: 1px solid #555; /* Box border */
+    background-color: transparent;
+    margin-bottom: 2rem;
+    /* Transition for the hover effect */
+    transition: transform 0.3s ease-out, box-shadow 0.3s ease-out, border-color 0.3s ease-out;
+}
+
+.project-box:hover {
+    transform: translateY(-6px); /* "come forward" effect */
+    border-color: #999; /* Brighter border on hover */
+    box-shadow: 0 6px 25px rgba(0, 255, 0, 0.1); /* Subtle green glow */
+}
+
+/* This wrapper makes the main content area a clickable link */
+.project-link-wrapper {
+    display: block;
+    padding: 2rem;
+    color: #e0e0e0;
+    text-decoration: none;
+}
+
+.project-link-wrapper:hover {
+    text-decoration: none; /* We'll style the title instead */
+}
+
+/* On hover, make the title green and underlined */
+.project-link-wrapper:hover .project-title {
+    color: #0f0;
+    text-decoration: underline;
+}
+
+.project-title {
+    color: #e0e0e0;
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+    transition: color 0.2s ease;
+}
+
+.project-date {
+    color: #888; /* Gray color for the date */
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.project-description {
+    color: #c0c0c0; /* Slightly lighter than default text */
+    line-height: 1.7;
+}
+
+.project-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap; /* Allow wrapping on small screens */
+    gap: 1rem; /* Space between items if they wrap */
+    padding: 1rem 2rem; /* Padding for the footer */
+    border-top: 1px solid #333; /* Separator line */
+    background-color: hsl(0, 0%, 3%); /* Slightly different bg for footer */
+}
+
+.project-meta {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    color: #aaa;
+    font-size: 0.9rem;
+}
+
+/* Default author style (purple) */
+.project-meta .author {
+    color: #ac00ac; 
+    background-color: rgba(172, 0, 172, 0.1);
+    padding: 0.1em 0.4em;
+    border-radius: 3px;
+    font-weight: 700;
+}
+
+/* Author style from screenshot */
+.project-meta .author.blue {
+    color: #87CEEB;
+    background-color: rgba(135, 206, 235, 0.1);
+}
+
+/* Author style from screenshot */
+.project-meta .author.light-purple {
+    color: #E6A8FF;
+    background-color: rgba(230, 168, 255, 0.1);
+}
+
+.project-read-more {
+    background-color: #0f0; /* Green button */
+    color: #000; /* Black text */
+    padding: 0.5rem 1rem;
+    font-weight: 700;
+    text-decoration: none;
+    border: 1px solid #0f0;
+    transition: all 0.2s ease;
+    white-space: nowrap; /* Prevent button text from wrapping */
+}
+
+.project-read-more:hover {
+    background-color: #33ff00; /* Brighter green */
+    color: #000;
+    text-decoration: none;
+    box-shadow: 0 0 10px #0f0; /* Green glow */
+    transform: scale(1.05);
+}
+
+/* Responsive handling for the project box footer */
+@media (max-width: 600px) {
+    .project-footer {
+        flex-direction: column;
+        align-items: flex-start; /* Align all items left */
+    }
+
+    .project-link-wrapper {
+        padding: 1.5rem;
+    }
+
+    .project-footer {
+        padding: 1rem 1.5rem;
+    }
 }
