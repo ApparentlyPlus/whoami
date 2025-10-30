@@ -187,27 +187,34 @@ var TE;
 if (terminalScreenElement) {
     TE = TerminalEmulator.init(terminalScreenElement);
 }
-
 // This function will be called by the animation orchestrator
 function startTerminalAnimation() {
     if (TE) {
-        TE.wait(500, false) // Short delay after border anim
-          .then( TE.enterInput.bind(TE, 'whoami') )
-          .then( TE.enterCommand.bind( TE ) )
-          .then( TE.enterResponse.bind(TE, 'Panagiotis Chatzikallias (aka ApparentlyPlus)') )
-          .then( TE.wait.bind(TE, 1000, false) )
-          .then( TE.enterInput.bind(TE, 'bash whatAreMyInterests.sh') )
-          .then( TE.enterCommand.bind(TE) )
-          .then( TE.enterResponse.bind(TE, 'Backend Development, Systems Design, Cybersecurity, Compilers') )
-          .then( TE.wait.bind(TE, 1000, false) )
-          .then( TE.enterInput.bind(TE, 'bash FavoriteLanguages.sh') )
-          .then( TE.enterCommand.bind(TE) )
-          .then( TE.enterResponse.bind(TE, 'Python, C, Rust, Go') )
-          .then( TE.wait.bind(TE, 1000, false) )
-          .then( TE.enterInput.bind(TE, 'cat recruiter_note.txt') )
-          .then( TE.enterCommand.bind(TE) )
-          .then( TE.enterResponse.bind(TE, 'This website serves as my interactive autobiography. Welcome.') )
-          .then( TE.reset.bind(TE) );
+        TE.wait(TE.wait.bind(TE, 500, false)) // Short delay after page load
+          .then(TE.enterInput.bind(TE, 'whoami'))
+          .then(TE.enterCommand.bind(TE))
+          .then(TE.enterResponse.bind(TE, 'Panagiotis Chatzikallias (aka ApparentlyPlus)'))
+          .then(TE.wait.bind(TE, 1000, true))
+          
+          .then(TE.enterInput.bind(TE, 'cat ./core_competencies.txt'))
+          .then(TE.enterCommand.bind(TE))
+          .then(TE.enterResponse.bind(TE, 'Systems Programming (Kernels, Optimization, Distributed systems), Full-Stack Dev (React, ASP.NET, MongoDB, SQL), Cloud & DevOps (Docker, CI/CD)'))
+          .then(TE.wait.bind(TE, 1000, true))
+
+          .then(TE.enterInput.bind(TE, 'ls ./top_projects'))
+          .then(TE.enterCommand.bind(TE))
+          .then(TE.enterResponse.bind(TE, 'GatOS (Modular Kernel Toolchain), UniNotes (Full-Stack Collab Platform), Marina (Reflective PE Loader)'))
+          .then(TE.wait.bind(TE, 1000, true))
+
+          .then(TE.enterInput.bind(TE, 'cat ./fav_lang.txt'))
+          .then(TE.enterCommand.bind(TE))
+          .then(TE.enterResponse.bind(TE, "Java, C, Python, C# and whatever fits the architecture best!"))
+
+          .then(TE.enterInput.bind(TE, 'bash ./check_distinctions.sh'))
+          .then(TE.enterCommand.bind(TE))
+          .then(TE.enterResponse.bind(TE, 'ICPC Regional Finalist (2025) | ECSC National Team (2023, Rank 3rd) | HTB Challenge Creator'))
+          .then(TE.wait.bind(TE, 1000, true))
+          
+          .then(TE.reset.bind(TE)); // Loop the animation
     }
 }
-
