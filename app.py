@@ -15,7 +15,7 @@ def projects():
     return render_template('projects.html')
 
 @app.route('/blog')
-def projects():
+def blog():
     return render_template('blog.html')
 
 @app.route('/resume') # Placeholder for now
