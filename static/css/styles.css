@@ -5,15 +5,16 @@ body {
     line-height: 1.6;
 }
 
+/* For most browsers */
 ::selection {
-  background-color: #800080; /* Magenta */
-  color: #FFFFFF;
+  background-color: #FF00FF; /* Magenta */
+  color: #FFFFFF; /* White text for good contrast */
 }
 
 /* For Firefox */
 ::-moz-selection {
-  background-color: #800080; /* Magenta */
-  color: #FFFFFF;
+  background-color: #FF00FF; /* Magenta */
+  color: #FFFFFF; /* White text for good contrast */
 }
 
 a {
@@ -25,7 +26,7 @@ a:hover {
 }
 
 .container {
-    max-width: 1100px; /* Increased from 800px */
+    max-width: 1100px;
     margin: auto;
     padding: 2rem;
 }
@@ -41,23 +42,174 @@ a:hover {
 }
 
 .highlight {
-    background-color: #800080; /* kewl purple */
+    background-color: #8000ff; /* purple highlight */
     color: #fff;
     padding: 0 0.25rem;
 }
 
+/* --- NEW HEADER & MENU STYLES --- */
+
+.site-header {
+    padding: 1rem 2rem; /* Give it space */
+    border-bottom: 1px solid #333;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative; /* For positioning the dropdown */
+}
+
+.logo {
+    font-weight: bold;
+    color: #0f0; /* Neon green */
+    font-size: 1.2rem;
+    z-index: 1001; /* Keep logo above menu */
+}
+
+/* Hamburger Menu Button Styles */
+.menu-toggle {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 30px;
+    height: 25px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 1001; /* Above the menu */
+}
+
+.hamburger-bar {
+    width: 100%;
+    height: 3px;
+    background-color: #e0e0e0;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+
+/* Hamburger "X" animation */
+.menu-toggle.is-active .hamburger-bar:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+}
+.menu-toggle.is-active .hamburger-bar:nth-child(2) {
+    opacity: 0;
+}
+.menu-toggle.is-active .hamburger-bar:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+}
+
+/* Menu Container Styles */
+.main-menu-container {
+    /* Hide by default */
+    max-height: 0;
+    overflow: hidden;
+    
+    /* Positioning */
+    position: absolute;
+    top: 100%; /* Position right below the header */
+    right: 0; /* Align to the right */
+    width: 250px;
+    
+    /* Style */
+    background-color: #111; /* Dark background */
+    border: 1px solid #333;
+    border-top: none;
+    
+    /* Animation */
+    transition: max-height 0.3s ease-out;
+    z-index: 1000;
+}
+
+/* Expanded state */
+.main-menu-container.is-active {
+    max-height: 500px; /* Animate to this height */
+}
+
+/* Links inside the container */
+.main-menu {
+    display: flex;
+    flex-direction: column; /* Stack links vertically */
+    gap: 0;
+    padding: 1rem;
+}
+
+.main-menu a {
+    color: #e0e0e0;
+    text-decoration: none;
+    font-weight: 700;
+    padding: 0.75rem 1rem;
+    transition: all 0.2s ease;
+    border-radius: 4px;
+}
+
+.main-menu a:hover {
+    color: #8000ff; /* Purple */
+    background-color: #222;
+    transform: scale(1.05); /* "pop" */
+    text-decoration: none;
+}
+
+
+/* --- LANDING PAGE STYLES --- */
+
+.landing-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+    min-height: 80vh;
+}
+
+.landing-profile-pic {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-bottom: 1.5rem;
+    object-fit: cover;
+}
+
+.landing-left {
+    color: #e0e0e0;
+    line-height: 1.7;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.landing-name {
+    font-size: 2.5rem;
+    color: #ffffff;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.landing-subtitle {
+    font-size: 1.25rem;
+    color: #0f0;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+}
+
+.landing-bio {
+    font-size: 1rem;
+    margin-bottom: 2rem;
+    max-width: 450px;
+}
+
+
 .screen {
   overflow: hidden;
-  background: #000000;
-  border: 1px solid #333; /* Added to define the screen edge */
-  position: relative; /* Added for child element positioning */
-  min-height: 450px; /* Added to give it space */
+  background: #000; /* Match page background, as requested */
+  position: relative;
+  min-height: 450px;
+  border: 0px solid #333; /* The "box around" */
+  border-radius: 0; /* Sharp corners */
 }
 
 .terminal_emulator {
   width: 100%;
-  
-  padding: 40px;
+  padding: 40px; /* More breathing room */
   font-size: 20px;
   line-height: 25px;
   box-sizing: border-box;
@@ -76,7 +228,6 @@ a:hover {
   margin: 0 0 9px 0;
 }
 
-/* Converted SASS-style nesting */
 .terminal_emulator__field:before,
 .terminal_emulator__field:after,
 .terminal_emulator__command:before,
@@ -84,7 +235,6 @@ a:hover {
   position: absolute;
 }
 
-/* Converted SASS-style nesting */
 .terminal_emulator__field:before,
 .terminal_emulator__command:before {
   left:0;
@@ -104,7 +254,6 @@ a:hover {
   box-sizing: border-box;
 }
 
-/* Converted SASS-style nesting */
 .terminal_emulator__field:after {
   right: 0;
   bottom: 0.25em;
@@ -117,13 +266,11 @@ a:hover {
   animation: caretBlink 1s infinite;
 }
 
-/* Converted SASS-style nesting */
 .terminal_emulator__field.waiting {
   padding-left: 0;
   padding-right: 0;
 }
 
-/* Converted SASS-style nesting */
 .terminal_emulator__field.waiting:before {
   display: none;
 }
@@ -146,87 +293,12 @@ a:hover {
   }
 }
 
-.landing-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* Two equal columns */
-    gap: 3rem;
-    align-items: start; /* Changed from 'center' to 'start' */
-    min-height: 80vh;
-}
+/* --- RESPONSIVE STYLES --- */
 
-.landing-profile-pic {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%; /* Makes it circular */
-    border: 3px solid #0f0; /* Neon green border */
-    margin-bottom: 1.5rem;
-    object-fit: cover; /* Ensures the image covers the area */
-}
-
-/* This rule applies to screens 992px wide or smaller (tablets/mobile) */
 @media (max-width: 992px) {
     .landing-grid {
-        /* Stack to one column */
         grid-template-columns: 1fr;
         gap: 2rem;
     }
-
-    .landing-left {
-        /* Center all content inside the left block on mobile */
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
 }
 
-.landing-left {
-    color: #e0e0e0;
-    line-height: 1.7;
-}
-
-.landing-name {
-    font-size: 2.5rem; /* 40px */
-    color: #ffffff;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-}
-
-.landing-subtitle {
-    font-size: 1.25rem; /* 20px */
-    color: #0f0; /* Neon green */
-    font-weight: 700;
-    margin-bottom: 1.5rem;
-}
-
-.landing-bio {
-    font-size: 1rem; /* 16px */
-    margin-bottom: 2rem;
-    max-width: 450px; /* Keep the bio line-length readable */
-}
-
-.landing-nav {
-    display: flex;
-    flex-direction: column; /* Stack links vertically */
-    gap: 0.75rem; /* Space between links */
-}
-
-.landing-nav a {
-    color: #e0e0e0; /* Default color */
-    font-size: 1.1rem;
-    font-weight: 700;
-    text-decoration: none;
-    transition: all 0.2s ease;
-}
-
-.landing-nav a:hover {
-    color: #0f0; /* Highlight on hover */
-    text-decoration: none;
-    transform: translateX(5px); /* Add a slight "push" effect */
-}
-
-/* Ensure the terminal screen in the right column behaves */
-.landing-right .screen {
-    width: 100%;
-    /* The min-height: 450px you already have is perfect */
-}

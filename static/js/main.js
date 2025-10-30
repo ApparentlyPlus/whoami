@@ -1,3 +1,20 @@
+document.addEventListener('DOMContentLoaded', () => {
+    const menuToggleBtn = document.getElementById('menu-toggle-btn');
+    const mainMenu = document.getElementById('main-menu');
+
+    if (menuToggleBtn && mainMenu) {
+        menuToggleBtn.addEventListener('click', () => {
+            // Toggle the 'is-active' class on both the button and the menu
+            menuToggleBtn.classList.toggle('is-active');
+            mainMenu.classList.toggle('is-active');
+
+            // Update ARIA attribute for accessibility
+            const isExpanded = menuToggleBtn.getAttribute('aria-expanded') === 'true';
+            menuToggleBtn.setAttribute('aria-expanded', !isExpanded);
+        });
+    }
+});
+
 var TerminalEmulator = {
   init: function(screen) {
     var inst = Object.create(this);
@@ -103,12 +120,6 @@ var TerminalEmulator = {
     });
   }
 };
-
-
-/*
- * * This is where the magic happens
- *
- */ 
 
 
 var TE = TerminalEmulator.init(document.getElementById('screen'));
