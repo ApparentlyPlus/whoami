@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	// --- Navigation Toggle ---
 	const menuToggleBtn = document.getElementById('menu-toggle-btn');
 	const mainMenu = document.getElementById('main-menu');
-	const pageOverlay = document.getElementById('page-overlay'); // Get the overlay
+	const pageOverlay = document.getElementById('page-overlay');
 
 	// Check if all elements exist
 	if (menuToggleBtn && mainMenu && pageOverlay) {
@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		menuToggleBtn.addEventListener('click', () => {
 			menuToggleBtn.classList.toggle('is-active');
 			mainMenu.classList.toggle('is-active');
-			pageOverlay.classList.toggle('is-active'); // Toggle overlay
+			pageOverlay.classList.toggle('is-active');
 			
 			const isExpanded = menuToggleBtn.getAttribute('aria-expanded') === 'true';
 			menuToggleBtn.setAttribute('aria-expanded', !isExpanded);
@@ -31,20 +31,24 @@ document.addEventListener('DOMContentLoaded', () => {
     const landingGrid = document.getElementById('landing-grid');
 
     if (landingGrid) {
-        const terminalScreen = document.querySelector('#landing-terminal .screen');
+        // Force a reflow to ensure animations start fresh
+        void landingGrid.offsetWidth;
+        
+        // Use requestAnimationFrame to ensure the DOM is fully ready
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                // Start the initial fade-in/pop-in animation
+                document.body.classList.add('animation-running');
 
-        // 1. Start the initial fade-in/pop-in animation
-        document.body.classList.add('animation-running');
-
-        // 2. Start the terminal typing animation after its CSS pop-in delay
-        setTimeout(() => {
-            startTerminalAnimation();
-        }, 2400); // 2400ms = 2.4s
+                // Start the terminal typing animation after its CSS pop-in delay
+                setTimeout(() => {
+                    startTerminalAnimation();
+                }, 2400);
+            });
+        });
     }
 
-
     // --- Particles.js Config ---
-    // Make sure the particles-js div exists
     if (document.getElementById('particles-js')) {
         particlesJS('particles-js', {
             "particles": {
@@ -68,7 +72,6 @@ document.addEventListener('DOMContentLoaded', () => {
 /* --- Terminal Emulator Code Below --- */
 
 var TerminalEmulator = {
-// ... existing TerminalEmulator object code ...
   init: function(screen) {
     var inst = Object.create(this);
     inst.screen = screen;
@@ -88,7 +91,6 @@ var TerminalEmulator = {
     this.field = inputField;
     this.fieldwrap = inputWrap;
   },
-
 
   enterInput: function(input) {
     return new Promise( (resolve, reject) => {
@@ -174,23 +176,22 @@ var TerminalEmulator = {
   }
 };
 
-
 /*
  * * This is where the magic happens
  *
  */ 
 
 // We must initialize the terminal emulator object first
-// We check if the 'screen' element exists before init
 const terminalScreenElement = document.getElementById('screen');
 var TE;
 if (terminalScreenElement) {
     TE = TerminalEmulator.init(terminalScreenElement);
 }
+
 // This function will be called by the animation orchestrator
 function startTerminalAnimation() {
     if (TE) {
-        TE.wait(TE.wait.bind(TE, 500, false)) // Short delay after page load
+        TE.wait(TE.wait.bind(TE, 500, false))
           .then(TE.enterInput.bind(TE, 'whoami'))
           .then(TE.enterCommand.bind(TE))
           .then(TE.enterResponse.bind(TE, 'Panagiotis Chatzikallias (aka ApparentlyPlus)'))
@@ -209,12 +210,13 @@ function startTerminalAnimation() {
           .then(TE.enterInput.bind(TE, 'cat ./fav_lang.txt'))
           .then(TE.enterCommand.bind(TE))
           .then(TE.enterResponse.bind(TE, "Java, C, Python, C# and whatever fits the architecture best!"))
+          .then(TE.wait.bind(TE, 1000, true))
 
           .then(TE.enterInput.bind(TE, 'bash ./check_distinctions.sh'))
           .then(TE.enterCommand.bind(TE))
           .then(TE.enterResponse.bind(TE, 'ICPC Regional Finalist (2025) | ECSC National Team (2023, Rank 3rd) | HTB Challenge Creator'))
           .then(TE.wait.bind(TE, 1000, true))
           
-          .then(TE.reset.bind(TE)); // Loop the animation
+          .then(TE.reset.bind(TE));
     }
 }
