@@ -74,22 +74,56 @@ a:hover {
 
 /* === HEADER === */
 .site-header {
-	padding: 1rem 2rem;
-	border-bottom: 1px solid #333;
-	display: flex;
-	justify-content: space-between;
-	align-items: center;
-	position: relative;
+    position: relative;
+    padding: 1rem 2rem;
+    border-bottom: 1px solid #333;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    color: #e0e0e0;
+    gap: 0.5rem;
+}
+
+.header-icon {
+    width: 24px;
+    height: 24px;
+}
+
+.header-wb-text {
+    font-weight: bold;
+    color: rgb(255, 255, 255);
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.header-text {
+    font-weight: bold;
+    color: #0f0;
+    font-family: 'JetBrains Mono', monospace;
 }
 
 .logo {
-	font-weight: bold;
-	color: #0f0;
-	font-size: 1.2rem;
-	z-index: 1001;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    font-weight: 700;
+    color: #0f0;
+    font-size: 1.1rem;
+    user-select: none;
+    text-shadow: 0 0 5px #0f0;
 }
 
-/* === FOOTER (FIXED + DYNAMIC HEIGHT) === */
+.logo:hover {
+	text-shadow: 0 0 10px #800080;
+	transform: translateX(-50%) scale(1.05);
+}
+
+/* === FOOTER === */
 .site-footer-bottom {
     display: flex;
     align-items: center;
@@ -98,7 +132,7 @@ a:hover {
     border-top: 1px solid #333;
     padding: 0 1rem;
     flex-shrink: 0;
-    line-height: 1;  /* Critical: override body line-height */
+    line-height: 1;
 }
 
 .footer-links {
@@ -107,13 +141,13 @@ a:hover {
     justify-content: center;
     align-items: center;
     gap: 0;
-    line-height: 1;  /* Override here too */
+    line-height: 1;
 }
 
 .footer-link-item,
 .footer-link-item::before,
 .footer-link-item::after {
-    line-height: 1;  /* Reset line-height on the actual text and pseudo-elements */
+    line-height: 1;
 }
 
 .footer-separator {
