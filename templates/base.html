@@ -16,7 +16,7 @@
     <link rel="manifest" href="{{ url_for('static', filename='assets/favicon/site.webmanifest') }}">
 
 </head>
-<body>
+<body class="{% block body_class %}{% endblock %}">
 
 <!-- Particles animation -->
 <div id="particles-js"></div>
