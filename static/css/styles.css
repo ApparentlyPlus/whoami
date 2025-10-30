@@ -574,6 +574,11 @@ body.animation-running #landing-terminal {
   background-color: rgba(230, 168, 255, 0.1);
 }
 
+.project-meta .author.yellow {
+  color: #b99700;
+  background-color: rgba(255, 242, 168, 0.1);
+}
+
 .project-read-more {
   background-color: #0f0;
   color: #000;

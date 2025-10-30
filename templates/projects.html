@@ -6,64 +6,141 @@
 
 <div class="projects-container">
 
-    <h2 class="projects-page-title">Featured Projects / Security Research</h2>
+    <h2 class="projects-page-title">Featured Projects</h2>
 
     <article class="project-box">
-        <a href="#" class="project-link-wrapper">
+        <a href="https://github.com/ApparentlyPlus/GatOS/" target="_blank" rel="noopener noreferrer" class="project-link-wrapper">
             <header>
                 <h3 class="project-title">GatOS (Modular Kernel Toolchain)</h3>
-                <p class="project-date">15 October 2025</p>
+                <p class="project-date">May 24, 2025 - Ongoing</p>
             </header>
             <p class="project-description">
-                A from-scratch modular kernel toolchain designed for building custom operating systems. Features a custom bootloader, memory manager, and a reflective PE loader.
+                GatOS is a cleanly designed, modular kernel serving as the foundational layer for building toy operating systems. It was designed from scratch, and serves as the backbone of a configurable, toy-OS building toolchain called PawStack. This is my university thesis.
             </p>
         </a>
         <footer class="project-footer">
             <div class="project-meta">
-                <span>&#128187; Systems Programming</span> <span>&mdash;</span>
+                <span>Systems Programming</span> <span>&mdash;</span>
                 <span class="author">@ApparentlyPlus</span>
             </div>
-            <a href="#" class="project-read-more">> Read More</a>
+            <a href="https://github.com/ApparentlyPlus/GatOS/" target="_blank" rel="noopener noreferrer" class="project-read-more">> Check it out</a>
         </footer>
     </article>
 
     <article class="project-box">
-        <a href="#" class="project-link-wrapper">
+        <a href="https://github.com/daglaroglou/UniNotes" target="_blank" rel="noopener noreferrer" class="project-link-wrapper">
             <header>
                 <h3 class="project-title">UniNotes (Full-Stack Collab Platform)</h3>
-                <p class="project-date">20 July 2025</p>
+                <p class="project-date">Apr 10, 2025 - Core Functionality Completed</p>
             </header>
             <p class="project-description">
-                A full-stack collaborative note-taking platform for students. Built with React, ASP.NET, MongoDB, and SQL, featuring real-time updates and a secure auth system.
+                A full-stack collaborative note-taking platform for students. Built with Blazor .NET (the successor of ASP.NET), MongoDB, and SQL, featuring real-time updates and a full fledged auth system. This is a collaborative project with fellow students, test-run for a brief period at our university.
             </p>
         </a>
         <footer class="project-footer">
             <div class="project-meta">
-                <span>&#127760; Full-Stack Dev</span> <span>&mdash;</span>
+                <span>Full-Stack Dev, Deployment</span> <span>&mdash;</span>
                 <span class="author">@ApparentlyPlus</span>
+                <span>&</span>
+                <span class="author blue">@Daglaroglou</span>
+                <span>&</span>
+                <span class="author yellow">@Wallabit</span>
             </div>
-            <a href="#" class="project-read-more">> Read More</a>
+            <a href="https://github.com/daglaroglou/UniNotes" target="_blank" rel="noopener noreferrer" class="project-read-more">> Check it out</a>
         </footer>
     </article>
     
     <article class="project-box">
-        <a href="#" class="project-link-wrapper">
+        <a href="https://github.com/ApparentlyPlus/Marina" target="_blank" rel="noopener noreferrer" class="project-link-wrapper">
             <header>
-                <h3 class="project-title">HTTP3 Request Smuggling With Haproxy</h3>
-                <p class="project-date">11 August 2025</p>
+                <h3 class="project-title">Marina (Dynamic PE loader)</h3>
+                <p class="project-date">Feb 14, 2025</p>
             </header>
             <p class="project-description">
-                Using Haproxy's CVE-2024-53008 to showcase practical insights into how HTTP3 opens up a whole new attack surface for request smuggling attacks.
+                Marina is an educational C# project that demonstrates the principles of Reflective PE Loading. It is an attempt at replicating the core functionality of the Windows Portable Executable Loader (PE Loader). It was showcased several times as a demo in Operating Systems lectures.
             </p>
         </a>
         <footer class="project-footer">
             <div class="project-meta">
-                <span>&#128214; 16 min read</span> <span>&mdash;</span>
-                <span class="author blue">@dmosFunk</span>
-                <span>&</span>
-                <span class="author light-purple">@B1ean</span>
+                <span>Desktop Dev</span> <span>&mdash;</span>
+                <span class="author">@ApparentlyPlus</span>
             </div>
-            <a href="#" class="project-read-more">> Read More</a>
+            <a href="https://github.com/ApparentlyPlus/Marina" target="_blank" rel="noopener noreferrer" class="project-read-more">> Check it out</a>
+        </footer>
+    </article>
+
+    <br>
+    <h2 class="projects-page-title">Private / Sensitive Projects (In the works)</h2>
+
+    <article class="project-box">
+        <a class="project-link-wrapper">
+            <header>
+                <h3 class="project-title">Gata & Appa (GatOS Components)</h3>
+                <p class="project-date">Planned</p>
+            </header>
+            <p class="project-description">
+                Gata and Appa are two complementary components to GatOS. Gata is a custom high-level programming language for writing operating systems, which will be used by programmers to simplify OS Dev. Appa is the compiler for Gata. It will take in Gata source code and transpile it into C code that calls GatOS's APIs. Appa will construct the kernel depending on the code's logic by leveraging the modularity of GatOS's design. 
+            </p>
+        </a>
+        <footer class="project-footer">
+            <div class="project-meta">
+                <span>Compiler Design</span> <span>&mdash;</span>
+                <span class="author">@ApparentlyPlus</span>
+            </div>
+        </footer>
+    </article>
+
+    <article class="project-box">
+        <a class="project-link-wrapper">
+            <header>
+                <h3 class="project-title">BunnyDrop (Airdrop for Android)</h3>
+                <p class="project-date">Ongoing</p>
+            </header>
+            <p class="project-description">
+                BunnyDrop is an Android app for fast, peer-to-peer file sharing, inspired by Apple's Airdrop. It hosts a local HTTP server for direct transfers and uses Wi-Fi signal strength (RSSI) to estimate device proximity. Currently in active development as a personal project.
+            </p>
+        </a>
+        <footer class="project-footer">
+            <div class="project-meta">
+                <span>Mobile Development</span> <span>&mdash;</span>
+                <span class="author">@ApparentlyPlus</span>
+            </div>
+        </footer>
+    </article>
+
+    <article class="project-box">
+        <a class="project-link-wrapper">
+            <header>
+                <h3 class="project-title">NahIdWIN</h3>
+                <p class="project-date">Completed</p>
+            </header>
+            <p class="project-description">
+                NahIdWIN is a windows exlusive Proof-of-Concept I designed to demonstrate advanced no-write antivirus evasion techniques, leveraging managed code. Due to the sensitive nature of this project, further details are withheld from the public. This PoC has been shared with cybersecurity professionals for remediation purposes only, responsibly.
+            </p>
+        </a>
+        <footer class="project-footer">
+            <div class="project-meta">
+                <span>Exploit Dev</span> <span>&mdash;</span>
+                <span class="author">@ApparentlyPlus</span>
+            </div>
+        </footer>
+    </article>
+
+    <article class="project-box">
+        <a class="project-link-wrapper">
+            <header>
+                <h3 class="project-title">GreeklEase</h3>
+                <p class="project-date">Ongoing</p>
+            </header>
+            <p class="project-description">
+               GreekLease is an optimized engine that translates Greeklish (Greek written with Latin characters) to proper Greek. It uses a combination of rule-based algorithms, Databases and machine learning techniques to accurately interpret and convert text, making it easier for users to communicate in Greek without needing to switch keyboards or input methods.
+            </p>
+        </a>
+        <footer class="project-footer">
+            <div class="project-meta">
+                <span>Hobby Project</span> <span>&mdash;</span>
+                <span class="author">@ApparentlyPlus</span>
+            </div>
         </footer>
     </article>
 
