@@ -19,12 +19,16 @@ def projects():
     return render_template('projects.html')
 
 @app.route('/accolades')
-def blog():
+def accolades():
     return render_template('accolades.html')
+
+@app.route('/real-world-experience')
+def experience():
+    return render_template('real-world-experience.html')
 
 @app.route('/resume') # Placeholder for now
 def resume():
-    return send_from_directory('resume', 'my_resume.pdf')
+    return send_from_directory('resume', 'Chatzikallias_Panagiotis.pdf')
 
 if __name__ == '__main__':
     app.run(debug=True)
