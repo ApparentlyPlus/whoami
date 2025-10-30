@@ -8,21 +8,21 @@
 </head>
 <body>
 
-<!-- This is the container for the particle animation -->
+<!-- Particles animation -->
 <div id="particles-js"></div>
 
+<!-- Overlay -->
+<div class="overlay" id="page-overlay"></div>
+
 <header class="site-header">
-<!-- ... existing header code ... -->
     <div class="logo">apparently_plus</div>
     
-    <!-- Hamburger Menu Button -->
     <button class="menu-toggle" id="menu-toggle-btn" aria-label="Toggle navigation" aria-expanded="false">
         <span class="hamburger-bar"></span>
         <span class="hamburger-bar"></span>
         <span class="hamburger-bar"></span>
     </button>
 
-    <!-- Menu links - now in a container -->
     <nav class="main-menu-container" id="main-menu">
         <div class="main-menu">
             <a href="/">Home</a>
@@ -37,19 +37,19 @@
     {% block content %}{% endblock %}
 </main>
 
+<footer class="site-footer-bottom">
+    <div class="footer-links">
+        <a href="mailto:your-email@example.com" class="footer-link-item">Email</a>
+        <span class="footer-separator">|</span>
+        <a href="https://github.com/ApparentlyPlus" target="_blank" rel="noopener noreferrer" class="footer-link-item">GitHub</a>
+        <span class="footer-separator">|</span>
+        <a href="https://linkedin.com/in/your-profile" target="_blank" rel="noopener noreferrer" class="footer-link-item">LinkedIn</a>
+    </div>
+</footer>
+
 <!-- particles.js library -->
 <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-<!-- Your existing script (which will also load the particle config) -->
 <script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
 
-<body>
-
-<div id="particles-js"></div>
-
-<div class="overlay" id="page-overlay"></div>
-
-<header class="site-header">
-    
 </body>
 </html>
-

@@ -3,6 +3,13 @@ body {
 	color: #e0e0e0;
 	font-family: 'JetBrains Mono', monospace;
 	line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+body, html {
+    overflow-y: hidden;
 }
 
 /* === PARTICLES === */
@@ -57,9 +64,12 @@ a:hover {
 
 /* === LAYOUT === */
 .container {
-	max-width: 1100px;
-	margin: auto;
-	padding: 2rem;
+    flex: 1;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center; 
 }
 
 /* === HEADER === */
@@ -77,6 +87,87 @@ a:hover {
 	color: #0f0;
 	font-size: 1.2rem;
 	z-index: 1001;
+}
+
+/* === FOOTER (FIXED + DYNAMIC HEIGHT) === */
+.site-footer-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 64px;
+    border-top: 1px solid #333;
+    padding: 0 1rem;
+    flex-shrink: 0;
+    line-height: 1;  /* Critical: override body line-height */
+}
+
+.footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 0;
+    line-height: 1;  /* Override here too */
+}
+
+.footer-link-item,
+.footer-link-item::before,
+.footer-link-item::after {
+    line-height: 1;  /* Reset line-height on the actual text and pseudo-elements */
+}
+
+.footer-separator {
+    color: #888;
+    margin: 0 1rem;
+    user-select: none;
+    line-height: 1;
+}
+
+.footer-link-item {
+	color: #e0e0e0; /* White link text */
+	text-decoration: none;
+	font-weight: bold;
+	position: relative; /* Needed for pseudo-elements */
+	transition: color 0.2s ease;
+}
+
+/* Create the green brackets */
+.footer-link-item::before {
+	content: '[';
+	color: #0f0; /* Green bracket */
+	margin-right: 0.25em;
+	transition: color 0.2s ease;
+}
+
+.footer-link-item::after {
+	content: ']';
+	color: #0f0; /* Green bracket */
+	margin-left: 0.25em;
+	transition: color 0.2s ease;
+}
+
+/* Hover effect: a:hover {} from global is #0f0 text-decoration: underline */
+/* We will make the whole thing purple to match the menu */
+.footer-link-item:hover {
+	color: #0f0; /* Purple text on hover */
+	text-decoration: none; /* Override global underline */
+}
+
+.footer-link-item:hover::before,
+.footer-link-item:hover::after {
+	color: #0f0; /* Purple brackets on hover */
+}
+
+/* Responsive handling for small screens */
+@media (max-width: 768px) {
+	.footer-links {
+		flex-direction: column; /* Stack them vertically */
+		gap: 0.75rem; /* Add space between stacked items */
+	}
+	
+	.footer-separator {
+		display: none; /* Hide separators when stacked */
+	}
 }
 
 /* === MENU === */
@@ -160,11 +251,14 @@ a:hover {
 
 /* === LANDING LAYOUT === */
 .landing-grid {
-	display: grid;
-	grid-template-columns: 1fr 1fr;
-	gap: 3rem;
-	align-items: center;
-	min-height: 80vh;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+    justify-content: center;
+    min-height: auto;
+    height: 100%;
 }
 
 /* === POP-IN ANIMATIONS === */
