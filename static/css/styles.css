@@ -1,0 +1,36 @@
+body {
+    background-color: #000;
+    color: #e0e0e0;
+    font-family: 'JetBrains Mono', monospace;
+    line-height: 1.6;
+}
+
+a {
+    color: #0f0; /* neon green */
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+.container {
+    max-width: 800px;
+    margin: auto;
+    padding: 2rem;
+}
+
+.card {
+    border: 1px solid #333;
+    padding: 1rem;
+    margin-bottom: 2rem;
+}
+
+.card h2 {
+    color: #fff;
+}
+
+.highlight {
+    background-color: #8000ff; /* purple highlight */
+    color: #fff;
+    padding: 0 0.25rem;
+}
