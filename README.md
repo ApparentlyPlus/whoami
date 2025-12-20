@@ -50,7 +50,7 @@ whoami/
 ├── resume/
 │   └── Chatzikallias_Panagiotis.pdf
 ├── app.py                    # Flask application
-└── wsgi.py                   # WSGI entry point
+└── passenger_wsgi.py                   # WSGI entry point
 ```
 
 ## Key Pages
@@ -77,7 +77,7 @@ cd whoami
 
 2. Install dependencies:
 ```bash
-pip install flask
+pip install requirements.txt
 ```
 
 3. Run the development server:
