@@ -31,4 +31,4 @@ def resume():
     return send_from_directory('resume', 'Chatzikallias_Panagiotis.pdf')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
