@@ -1,0 +1,526 @@
+#  SITE CONTENT: Edit this file and reload.
+#
+#  Notes:
+#
+#  * Inline HTML is allowed in any text field. <em> is styled as the amber
+#    accent, <strong> as bright text. Use it sparingly.
+#  * Triple-quoted """ strings can span lines; line breaks inside them are
+#    collapsed into spaces when rendered, so wrap however reads best.
+#  * Anything under [data] is pulled live from GitHub and is NOT editable
+#    here — only the labels around it are.
+#  * Lines starting with # are comments and are ignored.
+
+# Identity and metadata (used in <head>, Open Graph cards, the footer)
+
+[site]
+name         = "Panagiotis Chatzikallias"
+role         = "Systems & Full-Stack Engineer"
+location     = "Thessaloniki, Greece"
+location_short = "Thessaloniki, GR"
+url          = "https://whoareyou.plus"
+email        = "apparentlyplus@gmail.com"
+github       = "https://github.com/ApparentlyPlus"
+linkedin     = "https://www.linkedin.com/in/panagiotischatzikallias/"
+brand        = "panagiotis"
+title        = "Panagiotis Chatzikallias — Systems & Full-Stack Engineer"
+description  = "Panagiotis Chatzikallias — systems & full-stack engineer. Kernels, compilers, and shipped products. University of Macedonia."
+tagline      = "I build things close to the metal — kernels, compilers, and the products on top of them."
+keywords     = "Panagiotis Chatzikallias, ApparentlyPlus, GatOS, PawStack, compilers, operating systems, systems programming, full-stack"
+preview_image = "assets/preview/preview.jpg"
+avatar_alt   = "Panagiotis Chatzikallias"
+
+# Top navigation. Order here is the order on screen.
+
+[[nav]]
+label = "Work"
+href  = "/#work"
+
+[[nav]]
+label = "Upstream"
+href  = "/#upstream"
+requires = "highlight"
+
+[[nav]]
+label = "PawStack"
+href  = "/pawstack"
+
+[[nav]]
+label = "Activity"
+href  = "/activity"
+
+[[nav]]
+label = "Experience"
+href  = "/#experience"
+
+[nav_resume]
+label = "Résumé"
+href  = "/resume"
+
+
+[footer]
+tagline = "Built from scratch · GitHub data synced daily"
+copyright = "Panagiotis Chatzikallias · Thessaloniki, Greece"
+
+[[footer.links]]
+label = "Email"
+href  = "mailto:apparentlyplus@gmail.com"
+
+[[footer.links]]
+label = "GitHub"
+href  = "https://github.com/ApparentlyPlus"
+
+[[footer.links]]
+label = "LinkedIn"
+href  = "https://www.linkedin.com/in/panagiotischatzikallias/"
+
+# Home Page
+
+[home.hero]
+eyebrow = "Systems & Full-Stack Engineer"
+title   = "I build things close to the metal — <em>kernels, compilers,</em> and the products on top of them."
+lede    = """
+Final-year CS student at the University of Macedonia, finishing a four-year
+degree in three and graduating September 2026. My thesis is a working OS
+toolchain — a kernel, a language, and a compiler that turns a program into a
+bootable operating system. When I'm not down at the bare metal, I ship
+full-stack products and land patches in other people's codebases.
+"""
+portrait_name = "Panagiotis Chatzikallias"
+portrait_line = "Thessaloniki, GR"
+
+[[home.hero.actions]]
+label = "Selected work"
+href  = "#work"
+style = "primary"
+
+[[home.hero.actions]]
+label = "Résumé"
+href  = "/resume"
+style = "ghost"
+arrow = true
+
+# The instrument card under the hero
+
+[home.hero.card]
+title = "Contribution Volume"
+sub   = "Commits, pull requests and reviews · rolling 12 months"
+unit  = "this year"
+foot_peak    = "Peak day"
+foot_commits = "Commits"
+foot_repos   = "Public repos"
+foot_reach   = "Upstream reach"
+foot_reach_unit = "stars"
+
+# UPSTREAM
+
+[home.upstream]
+index = "02"
+title = "Upstream"
+sub   = "Code I've landed in projects that aren't mine."
+
+label_stars        = "Stars on the repo"
+label_contributors = "Contributors"
+label_state        = "Status"
+link_label = "Read the pull request"
+more_label = "Everything else upstream"
+more_href  = "/activity#open-source"
+
+# Wording by repo scale. Placeholders: {repo} {owner} {name} {stars} {contributors} {state} {kind} {title} {number}
+
+[home.upstream.tiers]
+major   = "{article} {state} {kind} in {repo} — one of the largest open-source codebases in the ecosystem, at {stars} stars. Real review process, maintained in the open."
+notable = "{article} {state} {kind} in {repo}, a widely used open-source project with {stars} stars."
+active  = "{article} {state} {kind} in {repo}, an actively maintained open-source project with {stars} stars."
+small   = "{article} {state} {kind} in {repo}."
+
+# Hand-written copy for a specific repo, used instead of the tier template above. 
+
+[home.upstream.overrides]
+
+[home.upstream.overrides."dotnet/runtime"]
+body = """
+The codebase behind every C# program that ships.
+"""
+
+# Selected Work
+
+[home.work]
+index = "01"
+title = "Selected work"
+sub   = "A few projects I'd want you to look at first."
+
+[home.work.flagship]
+kicker  = "Undergraduate thesis · 2024-2026"
+title   = "PawStack"
+tagline = "A toolchain where your program <em>is</em> the operating system."
+badge   = "Feature complete"
+body    = """
+Write ordinary-looking code, compile it, and get a bootable OS image instead of
+an executable. The compiler reads your program to decide what kind of operating
+system you actually need — never allocate, and no heap is built; never spawn a
+thread, and the scheduler doesn't ship. Three pieces, designed and built end to
+end: a modular x86-64 kernel, a statically-typed systems language, and the
+compiler that ties them together.
+"""
+link_label = "Read the full case study"
+link_href  = "/pawstack"
+
+[[home.work.flagship.components]]
+name = "GatOS"
+repo = "GatOS"
+desc = "A modular x86-64 kernel — memory, threads, userspace, display and USB. The backbone."
+meta = "C · freestanding"
+
+[[home.work.flagship.components]]
+name = "Gata"
+repo = "Gata"
+desc = "A statically-typed systems language with a 24-module standard library. The frontend."
+meta = "Language design"
+
+[[home.work.flagship.components]]
+name = "Appa"
+repo = "Appa"
+desc = "The compiler: a real frontend, IR and backend on .NET 10 AOT. Emits C, builds the ISO."
+meta = "C# · .NET 10 AOT"
+
+[[home.work.projects]]
+title = "Intellectiva AI — Athens transit"
+badge = "2nd place"
+badge_style = "award"
+desc = """
+AI-driven transit optimization. A regression model predicts passenger flow from
+open data to re-time trains against subway congestion — Python/ONNX inference
+backend, Node.js real-time frontend. Awarded 2nd at the Apps4Athens hackathon,
+now being finalised as a B2G contract with OASA for a 2026 deployment.
+"""
+tags = ["Full-stack", "ML · ONNX"]
+link = "https://github.com/Apps4Athens-Hackathon-2-0/53_Intellectiva"
+link_label = "Repository"
+
+[[home.work.projects]]
+title = "UniNotes"
+badge = "Full-stack"
+desc = """
+A collaborative note-taking platform for students, built with Blazor (.NET),
+MongoDB and SQL — real-time updates and a full auth system. Test-run at our
+university with fellow students.
+"""
+tags = ["Blazor", "MongoDB"]
+link = "https://github.com/daglaroglou/UniNotes"
+link_label = "Repository"
+
+[[home.work.projects]]
+title = "CCPEL"
+badge = "Compiler"
+repo  = "CCPEL"
+desc = """
+A minimal compiler for a Lisp-like language that emits native x86 assembly —
+lexer, parser and codegen in pure C. A smaller warm-up for the compiler work
+in PawStack.
+"""
+tags = ["C", "x86 asm"]
+link_label = "Repository"
+
+[[home.work.projects]]
+title = "fdlibm — freestanding"
+badge = "Systems"
+repo  = "fdlibm_freestanding"
+desc = """
+A freestanding, architecture-independent math library in pure C99 —
+plug-and-play, no libc, no OS. Built to give GatOS a floating-point
+implementation it could depend on.
+"""
+tags = ["C99", "Freestanding"]
+link_label = "Repository"
+
+# A compact activity strip on the home page, linking to the full page.
+
+[home.activity_strip]
+index = "03"
+title = "Activity"
+sub   = "Pulled straight from the GitHub API and refreshed daily."
+link_label = "Full activity breakdown"
+link_href  = "/activity"
+
+# Experience
+
+[home.experience]
+index = "04"
+title = "Experience"
+sub   = "Where the code meets people who depend on it."
+
+[[home.experience.roles]]
+period = "2025 — present"
+role   = "Co-Founder & Lead Engineer"
+org    = "Intellectiva AI"
+desc = """
+Leading the technical transition of our hackathon-winning transit MVP into a
+production service, and part of the negotiations with OASA (Athens Transport)
+to finalise a B2G contract for 2026.
+"""
+
+[[home.experience.roles]]
+period = "2025 — present"
+role   = "ML Engineer"
+org    = "Intellectiva AI × Meteo.gr"
+desc = """
+Architecting a Small Language Model pipeline for Greece's leading weather
+service — an intent classifier and NER layer feeding a compact model, wired to
+Meta's messaging APIs to handle high-concurrency user queries in production.
+"""
+
+[[home.experience.roles]]
+period = "2025"
+role   = "Responsible Disclosure"
+org    = "Coordinated via MITRE"
+desc = """
+Identified and led the coordinated disclosure of a critical authorization flaw
+in Unistudents, a university dashboard app with 100k+ downloads, averting
+potential financial loss for its sponsors. A CVE assignment has been approved
+and is pending publication.
+"""
+
+# Recognition
+
+[home.recognition]
+index = "05"
+title = "Recognition"
+sub   = "Degrees ahead of schedule, and a competitive streak."
+
+[[home.recognition.awards]]
+year  = "2023 — 2026"
+title = "Accelerated BSc + kernel thesis"
+desc  = "A four-year degree in three, graduating September 2026, with a systems-level OS thesis. GPA 8.3 / 10."
+
+[[home.recognition.awards]]
+year  = "2025"
+title = "HackTheBox challenge author"
+desc  = "Authored a cryptography challenge under final review for paid inclusion on the HTB platform."
+
+[[home.recognition.awards]]
+year  = "Nov 2025"
+title = "Apps4Athens — 2nd place"
+desc  = "Silver for our AI transit-optimization prototype; direct line to OASA executives."
+
+[[home.recognition.awards]]
+year  = "2025"
+title = "SEERC — regional finalist"
+desc  = "Finalist at the South Eastern European Regional Contest, 2025."
+
+[[home.recognition.awards]]
+year  = "2023"
+title = "HTB University CTF — 10th worldwide"
+desc  = "10th of 100+ teams globally, with a live-TV interview to go with it."
+
+[[home.recognition.awards]]
+year  = "2023"
+title = "ECSC — Team Greece, 11th in Europe"
+desc  = "Qualified 3rd nationally, then placed 11th of 28 nations at the European Cyber Security Challenge in Hamar, Norway."
+
+[[home.recognition.awards]]
+year  = "2023 — 2025"
+title = "Academic top marks"
+desc  = "10/10 in Data Structures and Object-Oriented Programming; 8.5/10 in Cloud Computing and Parallel Computing."
+
+# Contact
+
+[home.contact]
+title = "Let's talk."
+lede  = """
+I'm looking for systems, backend or full-stack roles where the hard part is
+actually hard. If that sounds like your team, I'd love to hear from you.
+"""
+primary_label = "apparentlyplus@gmail.com"
+ghost_label   = "Résumé (PDF)"
+
+# Activity Page (/activity)
+
+[activity]
+title = "Activity"
+page_title = "Activity — Panagiotis Chatzikallias"
+lede = """
+Everything below is pulled straight from the GitHub API and refreshed once a
+day. Nothing here is hand-maintained.
+"""
+
+[activity.metrics]
+title = "By the numbers"
+commits        = "Commits"
+commits_sub    = "last 12 months"
+prs_merged     = "PRs merged"
+prs_merged_sub = "all time"
+prs_open       = "PRs open"
+prs_open_sub   = "in review now"
+issues         = "Issues opened"
+issues_sub     = "all time"
+comments       = "Discussions"
+comments_sub   = "threads weighed in on"
+stars          = "Stars earned"
+stars_sub      = "across public repos"
+repos          = "Public repos"
+repos_sub      = "source, not forks"
+private        = "Private commits"
+private_sub    = "contributions hidden"
+
+[activity.calendar]
+title = "Every day of the last year"
+less  = "Less"
+more  = "More"
+
+[activity.languages]
+title = "Language distribution"
+note  = "by bytes committed across public repos"
+
+[activity.repos]
+title = "Public repositories"
+link  = "All on GitHub"
+
+[activity.open_source]
+title = "Open source"
+sub   = """
+Contributions to repositories that aren't mine — pull requests, issues and
+review threads, ranked by the size of the project.
+"""
+flag_major = "major project"
+label_stars = "Stars"
+label_contributions = "Contributions"
+reach_template = "Across {repos} external repositories totalling {stars} stars."
+
+[activity.feed]
+title = "Recent activity"
+sub   = "The last few things I opened, merged or weighed in on."
+
+# Pawstack Case Study (/pawstack)
+
+[pawstack]
+page_title = "PawStack — a toolchain where your program is the operating system"
+eyebrow = "Undergraduate thesis · University of Macedonia · written solo"
+title   = "PawStack"
+tagline = "A toolchain where your program <em>is</em> the operating system."
+lede = """
+Most operating systems are built to run any program. PawStack inverts that:
+you write one program, and the toolchain builds the smallest operating system
+that can run it. The compiler reads your code, works out which kernel
+subsystems it actually touches, and emits a bootable image containing only
+those.
+"""
+
+[[pawstack.stats]]
+label = "Kernel"
+value = "x86_64"
+
+[[pawstack.stats]]
+label = "Stdlib modules"
+value = "24"
+
+[[pawstack.stats]]
+label = "Written"
+value = "Solo"
+
+[[pawstack.stats]]
+label = "Status"
+value = "Feature complete"
+
+[pawstack.idea]
+title = "The idea"
+body = """
+A general-purpose kernel pays for everything it might need. A heap allocator
+ships whether or not you allocate; a scheduler ships whether or not you ever
+spawn a thread. For a general OS that is the right trade. For an appliance —
+a device that runs exactly one program forever — it is pure overhead, and it
+is overhead you cannot remove without becoming a kernel engineer.
+"""
+body_2 = """
+PawStack removes it automatically. Because the compiler can see the whole
+program, it knows the exact set of capabilities that program uses. Everything
+else is dead weight, and dead weight does not get linked. You write
+application code; you get an operating system.
+"""
+
+[pawstack.how]
+title = "How the compiler decides what ships"
+body = """
+Appa builds a capability set while lowering Gata to its IR. Each language
+feature and standard-library call maps to the kernel subsystems it requires,
+so the set grows as the program is analysed rather than being declared by
+hand.
+"""
+
+[[pawstack.how.steps]]
+step  = "01"
+title = "Parse and type-check"
+desc  = "Gata source becomes a typed AST. Static typing is what makes the rest of this possible — the compiler knows what every call resolves to."
+
+[[pawstack.how.steps]]
+step  = "02"
+title = "Collect capabilities"
+desc  = "Lowering to IR records which kernel services each construct needs. Heap use marks the allocator; threading marks the scheduler; a draw call marks the display driver."
+
+[[pawstack.how.steps]]
+step  = "03"
+title = "Configure the kernel"
+desc  = "The capability set selects GatOS modules. Anything unreferenced is never compiled in, so it costs nothing in size or boot time."
+
+[[pawstack.how.steps]]
+step  = "04"
+title = "Emit C, then an ISO"
+desc  = "The backend emits C, links it against the configured kernel, and produces a bootable image. Two commands from source to something QEMU will boot."
+
+[pawstack.components]
+title = "The three pieces"
+sub   = "Each is a standalone repository, and each is usable on its own."
+
+[[pawstack.components.pieces]]
+name = "GatOS"
+repo = "GatOS"
+role = "The backbone"
+meta = "C · freestanding · x86_64"
+desc = """
+A cleanly designed modular kernel. It manages memory, schedules threads, runs
+code in userspace, drives the display and supports USB devices. Every
+subsystem is a module the toolchain can include or leave out, which is what
+makes the whole idea work. CI builds it on Linux, Windows and macOS.
+"""
+
+[[pawstack.components.pieces]]
+name = "Gata"
+repo = "Gata"
+role = "The frontend"
+meta = "Language design · 24-module stdlib"
+desc = """
+A statically-typed, object-oriented systems language. Static types are not
+decoration here — whole-program type information is what lets the compiler
+prove which kernel features a program can and cannot reach.
+"""
+
+[[pawstack.components.pieces]]
+name = "Appa"
+repo = "Appa"
+role = "The orchestration layer"
+meta = "C# · .NET 10 AOT"
+desc = """
+A real compiler: frontend, intermediate representation and backend. It emits C
+rather than machine code, which keeps the toolchain portable and lets the
+system C compiler do the final optimisation, then drives the kernel build and
+produces the ISO.
+"""
+
+[pawstack.close]
+title = "Try it"
+body = """
+Everything is open source and builds in two commands. GatOS has the fullest
+documentation if you only want to read one repository.
+"""
+primary_label = "GatOS on GitHub"
+primary_href  = "https://github.com/ApparentlyPlus/GatOS"
+ghost_label   = "Back home"
+ghost_href    = "/"
+
+# 404
+
+[not_found]
+page_title = "404 — Panagiotis Chatzikallias"
+code = "404"
+message = "This page didn't compile."
+sub = "// no such route in the build"
+back = "↩ Back home"

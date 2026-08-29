@@ -1,33 +1,221 @@
 {% extends "base.html" %}
-{% block title %}Landing.sh{% endblock %}
-{% block logo_text %}ApparentlyPlus{% endblock %}
+{% import "_macros.html" as m %}
+{% set t = (gh.totals if gh else {}) %}
+{% set h = c.home %}
+{% block title %}{{ site.title }}{% endblock %}
 {% block content %}
 
-<!-- Added id="landing-grid" -->
-<div class="landing-grid" id="landing-grid">
-    
-    <!-- Added id="landing-left" -->
-    <div class="landing-left" id="landing-left">
-        
-        <img src="{{ url_for('static', filename='assets/avatar.jpg') }}" alt="Panagiotis Chatzikallias" class="landing-profile-pic">
+<!-- Hero -->
+<section class="hero" id="top">
+    <div class="hero-grid">
+        <div class="hero-text">
+            <p class="hero-eyebrow reveal"><i class="dot live"></i>{{ h.hero.eyebrow }}</p>
+            <h1 class="hero-title reveal">{{ h.hero.title | safe }}</h1>
+            <p class="hero-lede reveal">{{ h.hero.lede }}</p>
+            <div class="hero-actions reveal">
+                {% for a in h.hero.actions %}
+                <a href="{{ a.href }}" class="btn btn-{{ a.style }}">{{ a.label }}{% if a.arrow %} <span class="arr">↗</span>{% endif %}</a>
+                {% endfor %}
+            </div>
+        </div>
 
-        <h1 class="landing-name">Panagiotis Chatzikallias</h1>
-        <h2 class="landing-subtitle">Systems & Full-Stack Developer // Student</h2>
-        <p class="landing-bio">
-            Passionate student with a rare toolkit: building OS kernel toolchains by day, shipping secure, full-stack platforms by night. Architecting high-performance systems, from bare metal to distributed cloud solutions, is my forte.
-            <br><br>
-            Whew! struggling to talk about myself professionally is just as hard online, as it is at cocktail parties :)
-        </p>
-        
+        <figure class="hero-portrait reveal">
+            <div class="portrait-frame">
+                <img src="{{ url_for('static', filename='assets/avatar-632.jpg') }}"
+                     srcset="{{ url_for('static', filename='assets/avatar-632.jpg') }} 632w,
+                             {{ url_for('static', filename='assets/avatar-960.jpg') }} 960w"
+                     sizes="(max-width: 860px) 58px, 316px"
+                     alt="{{ site.avatar_alt }}"
+                     width="632" height="686" fetchpriority="high" decoding="async">
+            </div>
+            <figcaption class="portrait-plate">
+                <div class="portrait-name">{{ h.hero.portrait_name }}</div>
+                <div class="portrait-loc"><i class="dot"></i>{{ h.hero.portrait_line }}</div>
+            </figcaption>
+        </figure>
     </div>
-    
-    <!-- Added id="landing-terminal" -->
-    <div class="landing-right" id="landing-terminal">
-        <!-- This is the terminal "box" -->
-        <div class="screen">
-            <!-- The terminal text content area -->
-            <div id="screen" class="terminal_emulator"></div>
+
+    {% if gh and gh.calendar %}
+    {%- set weekly -%}{%- for w in gh.calendar.weeks -%}{{ w | select | map(attribute='count') | sum }}{{ ',' if not loop.last }}{%- endfor -%}{%- endset -%}
+    {%- set weekdates -%}{%- for w in gh.calendar.weeks -%}{{ (w | select | list | first).date }}{{ ',' if not loop.last }}{%- endfor -%}{%- endset -%}
+    {%- set monthmap -%}{%- for mo in gh.calendar.months -%}{{ mo.label }}:{{ mo.week }}{{ ',' if not loop.last }}{%- endfor -%}{%- endset -%}
+
+    <div class="instrument reveal">
+        <div class="instrument-head">
+            <div>
+                <div class="instrument-title">{{ h.hero.card.title }}</div>
+                <div class="instrument-sub">{{ h.hero.card.sub }}</div>
+            </div>
+            <a class="instrument-open" href="{{ gh.user.url }}" target="_blank"
+               rel="noopener noreferrer" aria-label="Open GitHub profile">↗</a>
+        </div>
+
+        <div class="readout instrument-readout">
+            <span data-count="{{ gh.calendar.total }}">{{ gh.calendar.total }}</span>
+            <span class="unit">{{ h.hero.card.unit }}</span>
+        </div>
+
+        <div class="instrument-chart" data-series="{{ weekly }}" data-weeks="{{ weekdates }}" data-months="{{ monthmap }}"></div>
+
+        <div class="instrument-foot">
+            {{ m.figure(h.hero.card.foot_peak, gh.calendar.max) }}
+            {{ m.figure(h.hero.card.foot_commits, t.commits_year) }}
+            {{ m.figure(h.hero.card.foot_repos, t.public_repos) }}
+            {% if t.external_reach %}{{ m.figure(h.hero.card.foot_reach, t.external_reach, h.hero.card.foot_reach_unit) }}{% endif %}
         </div>
     </div>
-</div>
+    {% endif %}
+</section>
+
+<!-- Work -->
+<section class="section" id="work">
+    {{ m.section_head(h.work.index, h.work.title, h.work.sub) }}
+
+    <article class="flagship reveal">
+        <div class="flagship-head">
+            <div>
+                <p class="flagship-kicker">{{ h.work.flagship.kicker }}</p>
+                <h3 class="flagship-title">{{ h.work.flagship.title }}</h3>
+                <p class="flagship-tagline">{{ h.work.flagship.tagline | safe }}</p>
+            </div>
+            <span class="badge badge-live"><i class="dot"></i>{{ h.work.flagship.badge }}</span>
+        </div>
+        <p class="flagship-body">{{ h.work.flagship.body }}</p>
+
+        <div class="component-grid">
+            {% for comp in h.work.flagship.components %}
+            {% set r = repos.get(comp.repo) %}
+            <a class="component" href="{{ r.url if r else site.github ~ '/' ~ comp.repo }}" target="_blank" rel="noopener noreferrer">
+                <div class="component-top">
+                    <span class="component-name">{{ comp.name }}</span>
+                    {% if r %}<span class="component-stars" title="Live from GitHub">★ {{ r.stars }}</span>{% endif %}
+                </div>
+                <p class="component-desc">{{ comp.desc }}</p>
+                <span class="component-meta">{{ comp.meta }}</span>
+            </a>
+            {% endfor %}
+        </div>
+
+        <a class="flagship-link" href="{{ h.work.flagship.link_href }}">{{ h.work.flagship.link_label }} <span class="arr">→</span></a>
+    </article>
+
+    <div class="project-grid">
+        {% for p in h.work.projects %}
+        {% set r = repos.get(p.repo) if p.repo is defined else none %}
+        <article class="card reveal">
+            <div class="card-head">
+                <h3 class="card-title">{{ p.title }}</h3>
+                <span class="badge{{ ' badge-award' if p.badge_style is defined and p.badge_style == 'award' }}">{{ p.badge }}</span>
+            </div>
+            <p class="card-desc">{{ p.desc }}</p>
+            <div class="card-foot">
+                {% for tag in p.tags %}<span class="tag">{{ tag }}</span>{% endfor %}
+                <a class="card-link" href="{{ p.link if p.link is defined else (r.url if r else site.github ~ '/' ~ p.repo) }}" target="_blank" rel="noopener noreferrer">{{ p.link_label }} <span class="arr">↗</span></a>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Upstream -->
+{% set u = h.upstream %}
+{% if highlight %}
+<section class="section" id="upstream">
+    {{ m.section_head(u.index, u.title, u.sub) }}
+
+    <article class="upstream reveal">
+        <div class="upstream-main">
+            <a class="upstream-repo mono" href="{{ highlight.repo_url }}" target="_blank" rel="noopener noreferrer">
+                <span class="oss-org">{{ highlight.owner }}/</span>{{ highlight.name }}
+                <span class="arr">↗</span>
+            </a>
+            <h3 class="upstream-title">{{ highlight.title }}</h3>
+            <p class="upstream-body">{{ highlight.body }}</p>
+            <div class="upstream-actions">
+                <a class="btn btn-primary" href="{{ highlight.url }}" target="_blank" rel="noopener noreferrer">{{ u.link_label }} <span class="arr">↗</span></a>
+                <a class="btn btn-ghost" href="{{ u.more_href }}">{{ u.more_label }} <span class="arr">→</span></a>
+            </div>
+        </div>
+        <div class="upstream-figures">
+            {{ m.figure(u.label_stars, highlight.stars | commas) }}
+            {% if highlight.contributors %}{{ m.figure(u.label_contributors, highlight.contributors | commas) }}{% endif %}
+            <div class="figure">
+                <span class="label">{{ u.label_state }}</span>
+                <span class="readout readout-{{ highlight.state_word }}">{{ highlight.state_word | capitalize }}</span>
+            </div>
+        </div>
+    </article>
+</section>
+{% endif %}
+
+<!-- Activity Strip -->
+{% if gh %}
+{% set a = h.activity_strip %}
+<section class="section" id="activity">
+    {{ m.section_head(a.index, a.title, a.sub, m.sync_badge(gh)) }}
+
+    <div class="metric-grid">
+        {% for met in [
+            {'v': t.commits_year,  'l': c.activity.metrics.commits,    's': c.activity.metrics.commits_sub},
+            {'v': t.prs_merged,    'l': c.activity.metrics.prs_merged, 's': c.activity.metrics.prs_merged_sub},
+            {'v': t.stars,         'l': c.activity.metrics.stars,      's': c.activity.metrics.stars_sub},
+            {'v': t.public_repos,  'l': c.activity.metrics.repos,      's': c.activity.metrics.repos_sub}
+        ] %}
+        {% if met.v is not none %}
+        <div class="metric reveal">
+            <span class="label">{{ met.l }}</span>
+            {{ m.readout(met.v) }}
+            <span class="metric-sub">{{ met.s }}</span>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+
+    <a class="section-more reveal" href="{{ a.link_href }}">{{ a.link_label }} <span class="arr">→</span></a>
+</section>
+{% endif %}
+
+<!-- Experience -->
+<section class="section" id="experience">
+    {{ m.section_head(h.experience.index, h.experience.title, h.experience.sub) }}
+    <div class="timeline">
+        {% for e in h.experience.roles %}
+        <div class="tl-item reveal">
+            <div class="tl-period">{{ e.period }}</div>
+            <div class="tl-body">
+                <h3 class="tl-role">{{ e.role }}</h3>
+                <div class="tl-org">{{ e.org }}</div>
+                <p class="tl-desc">{{ e.desc }}</p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Recognition -->
+<section class="section" id="recognition">
+    {{ m.section_head(h.recognition.index, h.recognition.title, h.recognition.sub) }}
+    <div class="award-grid">
+        {% for a in h.recognition.awards %}
+        <div class="award reveal">
+            <div class="award-year">{{ a.year }}</div>
+            <h3 class="award-title">{{ a.title }}</h3>
+            <p class="award-desc">{{ a.desc }}</p>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Contact -->
+<section class="section contact" id="contact">
+    <div class="contact-inner reveal">
+        <h2 class="contact-title">{{ h.contact.title }}</h2>
+        <p class="contact-lede">{{ h.contact.lede }}</p>
+        <div class="contact-actions">
+            <a href="mailto:{{ site.email }}" class="btn btn-primary">{{ h.contact.primary_label }}</a>
+            <a href="/resume" class="btn btn-ghost">{{ h.contact.ghost_label }} <span class="arr">↗</span></a>
+        </div>
+    </div>
+</section>
+
 {% endblock %}

@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m %}
+{% set p = c.pawstack %}
+{% block title %}{{ p.page_title }}{% endblock %}
+{% block content %}
+
+<section class="page-head">
+    <p class="hero-eyebrow reveal"><i class="dot"></i>{{ p.eyebrow }}</p>
+    <h1 class="case-title reveal">{{ p.title }}</h1>
+    <p class="case-tagline reveal">{{ p.tagline | safe }}</p>
+    <div class="case-head-grid reveal">
+        <p class="page-lede">{{ p.lede }}</p>
+        <div class="case-stats">
+            {% for s in p.stats %}
+            <div class="figure">
+                <span class="label">{{ s.label }}</span>
+                <span class="readout readout-sm">{{ s.value }}</span>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- The idea -->
+<section class="section">
+    <div class="section-split">
+        {{ m.section_head('01', p.idea.title) }}
+        <div class="prose reveal">
+            <p>{{ p.idea.body }}</p>
+            <p>{{ p.idea.body_2 }}</p>
+        </div>
+    </div>
+</section>
+
+<!-- How it decides -->
+<section class="section">
+    <div class="section-split">
+    {{ m.section_head('02', p.how.title) }}
+    <div>
+    <p class="prose split-intro reveal">{{ p.how.body }}</p>
+    <ol class="steps">
+        {% for s in p.how.steps %}
+        <li class="step reveal">
+            <span class="step-index mono">{{ s.step }}</span>
+            <div class="step-body">
+                <h3 class="step-title">{{ s.title }}</h3>
+                <p class="step-desc">{{ s.desc }}</p>
+            </div>
+        </li>
+        {% endfor %}
+    </ol>
+    </div>
+    </div>
+</section>
+
+<!-- The three pieces -->
+<section class="section">
+    <div class="section-split">
+    {{ m.section_head('03', p.components.title, p.components.sub) }}
+    <div class="piece-list">
+        {% for item in p.components.pieces %}
+        {% set r = repos.get(item.repo) %}
+        <article class="piece reveal">
+            <div class="piece-head">
+                <div>
+                    <h3 class="piece-name mono">{{ item.name }}</h3>
+                    <span class="piece-role">{{ item.role }}</span>
+                </div>
+                <div class="piece-meta">
+                    {% if r %}
+                    <span class="piece-stars">★ {{ r.stars }}</span>
+                    <span class="piece-updated">{{ r.pushed_at | humandate }}</span>
+                    {% endif %}
+                </div>
+            </div>
+            <p class="piece-desc">{{ item.desc }}</p>
+            <div class="piece-foot">
+                <span class="tag">{{ item.meta }}</span>
+                <a class="card-link" href="{{ r.url if r else site.github ~ '/' ~ item.repo }}" target="_blank" rel="noopener noreferrer">Repository <span class="arr">↗</span></a>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+    </div>
+</section>
+
+<!-- Close -->
+<section class="section contact">
+    <div class="contact-inner reveal">
+        <h2 class="contact-title">{{ p.close.title }}</h2>
+        <p class="contact-lede">{{ p.close.body }}</p>
+        <div class="contact-actions">
+            <a href="{{ p.close.primary_href }}" class="btn btn-primary" target="_blank" rel="noopener noreferrer">{{ p.close.primary_label }} <span class="arr">↗</span></a>
+            <a href="{{ p.close.ghost_href }}" class="btn btn-ghost">{{ p.close.ghost_label }}</a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

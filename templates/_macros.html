@@ -1,0 +1,31 @@
+{# Reusable pieces, so the same element never gets written twice. #}
+
+{% macro readout(value, unit='', count=true, size='') %}
+<span class="readout{{ ' ' ~ size if size }}">
+    <span{% if count %} data-count="{{ value }}"{% endif %}>{{ value }}</span>
+    {%- if unit %}<span class="unit">{{ unit }}</span>{% endif -%}
+</span>
+{% endmacro %}
+
+{% macro figure(label, value, unit='') %}
+<div class="figure">
+    <span class="label">{{ label }}</span>
+    {{ readout(value, unit) }}
+</div>
+{% endmacro %}
+
+{% macro section_head(index, title, sub='', extra='') %}
+<div class="section-head reveal">
+    {% if index %}<span class="section-index">{{ index }}</span>{% endif %}
+    <h2 class="section-title">{{ title }}</h2>
+    {% if sub %}<p class="section-sub">{{ sub | safe }}{{ extra | safe }}</p>{% endif %}
+</div>
+{% endmacro %}
+
+{% macro sync_badge(gh) %}
+{%- if gh -%}
+<span class="sync-badge" title="Snapshot taken {{ gh.fetched_at }}">
+    <i class="dot live"></i>synced {{ gh.fetched_at | ago }}
+</span>
+{%- endif -%}
+{% endmacro %}

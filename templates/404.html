@@ -1,13 +1,10 @@
 {% extends "base.html" %}
-{% block title %}404.sh{% endblock %}
-{% block logo_text %}Error 404 — Not Found{% endblock %}
-
+{% block title %}{{ c.not_found.page_title }}{% endblock %}
 {% block content %}
-<div class="error-container">
-    <h1 class="error-code">404</h1>
-    <p class="error-message">The page you're looking for doesn't exist.</p>
-    <p class="landing-bio">Maybe it's still compiling. Maybe it doesn't want to show up. Who knows?</p>
-    
-    <a href="/" class="error-back-link">↩ Return Home</a>
+<div class="error-wrap">
+    <div class="error-code">4<span class="accent">0</span>4</div>
+    <p class="error-msg">{{ c.not_found.message }}</p>
+    <p class="error-sub">{{ c.not_found.sub }}</p>
+    <a href="/" class="btn btn-primary error-back">{{ c.not_found.back }}</a>
 </div>
 {% endblock %}
