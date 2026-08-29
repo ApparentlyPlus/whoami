@@ -1,33 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <!-- Default Meta Tags -->
-            <meta name="description" content="Who is this Panagiotis Chatzikallias anyway?">
-            <meta name="keywords" content="Panagiotis Chatzikallias, ApparentlyPlus, GatOS, OS Development, Flask, Portfolio">
-            <meta name="author" content="Panagiotis Chatzikallias">
 
-            <!-- Open Graph / Discord / Facebook -->
-            <meta property="og:type" content="website">
-            <meta property="og:url" content="https://whoareyou.plus/">
-            <meta property="og:title" content="WhoAreYou — Panagiotis Chatzikallias">
-            <meta property="og:description" content="A developer portfolio? A showcase? A static website? Click to find out :D">
-                <meta property="og:image" content="https://whoareyou.plus/static/assets/preview/preview.jpg">
-            <meta property="og:image:type" content="image/jpeg">
-            <meta property="og:image:width" content="1200">
-            <meta property="og:image:height" content="630">
+    <meta name="description" content="{{ site.description }}">
+    <meta name="keywords" content="{{ site.keywords }}">
+    <meta name="author" content="{{ site.name }}">
 
-            <!-- Twitter -->
-            <meta name="twitter:card" content="summary_large_image">
-            <meta name="twitter:title" content="WhoAreYou — Panagiotis Chatzikallias">
-            <meta name="twitter:description" content="A developer portfolio? A showcase? A static website? Click to find out :D">
-            <meta name="twitter:image" content="https://whoareyou.plus/static/assets/preview/preview.jpg">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ site.url }}/">
+    <meta property="og:title" content="{{ site.title }}">
+    <meta property="og:description" content="{{ site.tagline }}">
+    <meta property="og:image" content="{{ site.url }}/static/{{ site.preview_image }}">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
 
-        
-    <title>{% block title %}whoareyou.sh{% endblock %}</title>
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ site.title }}">
+    <meta name="twitter:description" content="{{ site.tagline }}">
+    <meta name="twitter:image" content="{{ site.url }}/static/{{ site.preview_image }}">
+
+    <title>{% block title %}{{ site.title }}{% endblock %}</title>
+
+    <link rel="preload" as="font" type="font/woff2" crossorigin
+          href="{{ url_for('static', filename='fonts/inter-latin.woff2') }}">
+    <link rel="preload" as="font" type="font/woff2" crossorigin
+          href="{{ url_for('static', filename='fonts/jetbrains-mono-latin.woff2') }}">
     <link href="{{ url_for('static', filename='css/styles.css') }}" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='assets/favicon/favicon-96x96.png') }}" sizes="96x96">
     <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='assets/favicon/favicon.svg') }}">
@@ -36,62 +37,81 @@
     <meta name="apple-mobile-web-app-title" content="whoareyou">
     <link rel="manifest" href="{{ url_for('static', filename='assets/favicon/site.webmanifest') }}">
 
+    <script>
+        (function () {
+            try {
+                var t = localStorage.getItem('theme');
+                if (t !== 'light' && t !== 'dark') {
+                    t = window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+                }
+                document.documentElement.setAttribute('data-theme', t);
+            } catch (e) {}
+        })();
+    </script>
 </head>
-<body class="{% block body_class %}{% endblock %}">
+<body>
 
-<!-- Particles animation -->
-<div id="particles-js"></div>
+<header class="nav" id="nav">
+    <a href="/" class="nav-brand">
+        <span class="nav-prompt">~/</span>{{ site.brand }}
+    </a>
 
-<!-- Overlay -->
-<div class="overlay" id="page-overlay"></div>
+    <nav class="nav-links" id="nav-menu">
+        <span class="nav-bubble" aria-hidden="true"></span>
 
-<header class="site-header">
+        {% set ns = namespace(i=0) %}
+        {% for item in nav %}
+        {% if not item.requires or available.get(item.requires) %}
+        {% set ns.i = ns.i + 1 %}
+        <a href="{{ item.href }}" style="--i: {{ ns.i }}">{{ item.label }}</a>
+        {% endif %}
+        {% endfor %}
+        {% set ns.i = ns.i + 1 %}
+        <a href="{{ nav_resume.href }}" class="nav-resume" style="--i: {{ ns.i }}">{{ nav_resume.label }} <span class="arr">↗</span></a>
 
-    <!-- Left: icon + text -->
-    <div class="header-left">
-        <img src="{{ url_for('static', filename='assets/favicon/logo.svg') }}" alt="icon" class="header-icon">
-        <span class="header-wb-text">./whoareyou.sh</span>
-    </div>
+        {% set ns.i = ns.i + 1 %}
+        <button class="nav-theme" id="nav-theme" style="--i: {{ ns.i }}">
+            <span>Appearance</span>
+            <span class="nav-theme-state" id="nav-theme-state">Dark</span>
+        </button>
+    </nav>
 
-    <!-- Center: logo/title -->
-    <div class="logo">{% block logo_text %}ApparentlyPlus [v20.0]{% endblock %}</div>
-
-    <!-- Right: menu toggle -->
-    <button class="menu-toggle" id="menu-toggle-btn" aria-label="Toggle navigation" aria-expanded="false">
-        <span class="hamburger-bar"></span>
-        <span class="hamburger-bar"></span>
-        <span class="hamburger-bar"></span>
+    <button class="theme-toggle" id="theme-toggle" aria-label="Toggle color theme" title="Toggle theme">
+        <svg class="icon-sun" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"></path></svg>
+        <svg class="icon-moon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"></path></svg>
     </button>
 
-    <nav class="main-menu-container" id="main-menu">
-        <div class="main-menu">
-            <h3 class="menu-title">Navigation</h3>
-            <a href="/">Home</a>
-            <a href="/projects">Projects</a>
-            <a href="/accolades">Accolades</a>
-            <a href="/real-world-experience">Real World Experience</a>
-            <a href="/resume">Resume</a>
-        </div>
-    </nav>
+    <button class="nav-toggle" id="nav-toggle" aria-expanded="false"
+            aria-controls="nav-menu" aria-label="Open menu">
+        <svg class="nav-chev" width="16" height="16" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 9l6 6 6-6"></path>
+        </svg>
+    </button>
 </header>
 
-<main class="container">
+<main>
     {% block content %}{% endblock %}
 </main>
 
-<footer class="site-footer-bottom">
-    <div class="footer-links">
-        <a href="mailto:apparentlyplus@gmail.com" class="footer-link-item">Email</a>
-        <span class="footer-separator">|</span>
-        <a href="https://github.com/ApparentlyPlus" target="_blank" rel="noopener noreferrer" class="footer-link-item">GitHub</a>
-        <span class="footer-separator">|</span>
-        <a href="https://www.linkedin.com/in/panagiotischatzikallias/" target="_blank" rel="noopener noreferrer" class="footer-link-item">LinkedIn</a>
+<footer class="site-footer">
+    <div class="footer-inner">
+        <div class="footer-tag">{{ footer.tagline }}</div>
+        <div class="footer-links">
+            {% for l in footer.links %}
+            <a href="{{ l.href }}"{% if l.href.startswith('http') %} target="_blank" rel="noopener noreferrer"{% endif %}>{{ l.label }}</a>
+            {% endfor %}
+        </div>
+        <div class="footer-copy">© <span id="year">2026</span> {{ footer.copyright }}</div>
     </div>
 </footer>
 
-<!-- particles.js library -->
-<script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
-<script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
+<div class="cal-tooltip" id="cal-tooltip" hidden>
+    <div class="tip-label" id="tip-label">Date</div>
+    <div class="tip-value"><span id="tip-count">0</span><span class="unit" id="tip-unit">contributions</span></div>
+    <div class="tip-note" id="tip-note" hidden></div>
+</div>
 
+<script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
 </body>
 </html>

@@ -1,0 +1,210 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m %}
+{% set t = (gh.totals if gh else {}) %}
+{% set a = c.activity %}
+{% block title %}{{ a.page_title }}{% endblock %}
+{% block content %}
+
+<section class="page-head">
+    <p class="hero-eyebrow reveal"><i class="dot live"></i>{{ site.role }}</p>
+    <h1 class="page-title reveal">{{ a.title }}</h1>
+    <p class="page-lede reveal">{{ a.lede }} {{ m.sync_badge(gh) }}</p>
+</section>
+
+{% if not gh %}
+<section class="section">
+    <p class="section-sub">No GitHub snapshot available yet. Run <code>python github_sync.py</code>.</p>
+</section>
+{% else %}
+
+<section class="section" id="chart">
+    {%- set weekly -%}{%- for w in gh.calendar.weeks -%}{{ w | select | map(attribute='count') | sum }}{{ ',' if not loop.last }}{%- endfor -%}{%- endset -%}
+    {%- set weekdates -%}{%- for w in gh.calendar.weeks -%}{{ (w | select | list | first).date }}{{ ',' if not loop.last }}{%- endfor -%}{%- endset -%}
+    {%- set monthmap -%}{%- for mo in gh.calendar.months -%}{{ mo.label }}:{{ mo.week }}{{ ',' if not loop.last }}{%- endfor -%}{%- endset -%}
+
+    {% if gh.calendar %}
+    <div class="instrument reveal">
+        <div class="instrument-head">
+            <div>
+                <div class="instrument-title">{{ c.home.hero.card.title }}</div>
+                <div class="instrument-sub">{{ c.home.hero.card.sub }}</div>
+            </div>
+            <a class="instrument-open" href="{{ gh.user.url }}" target="_blank" rel="noopener noreferrer" aria-label="Open GitHub profile">↗</a>
+        </div>
+        <div class="readout instrument-readout">
+            <span data-count="{{ gh.calendar.total }}">{{ gh.calendar.total }}</span>
+            <span class="unit">{{ c.home.hero.card.unit }}</span>
+        </div>
+        <div class="instrument-chart" data-series="{{ weekly }}" data-weeks="{{ weekdates }}" data-months="{{ monthmap }}"></div>
+    </div>
+    {% endif %}
+
+    <div class="metric-grid">
+        {% for met in [
+            {'v': t.commits_year,  'l': a.metrics.commits,    's': a.metrics.commits_sub},
+            {'v': t.prs_merged,    'l': a.metrics.prs_merged, 's': a.metrics.prs_merged_sub},
+            {'v': t.prs_open,      'l': a.metrics.prs_open,   's': a.metrics.prs_open_sub},
+            {'v': t.issues_opened, 'l': a.metrics.issues,     's': a.metrics.issues_sub},
+            {'v': t.comments,      'l': a.metrics.comments,   's': a.metrics.comments_sub},
+            {'v': t.stars,         'l': a.metrics.stars,      's': a.metrics.stars_sub},
+            {'v': t.public_repos,  'l': a.metrics.repos,      's': a.metrics.repos_sub},
+            {'v': t.private_year,  'l': a.metrics.private,    's': a.metrics.private_sub}
+        ] %}
+        {% if met.v is not none %}
+        <div class="metric reveal">
+            <span class="label">{{ met.l }}</span>
+            {{ m.readout(met.v) }}
+            <span class="metric-sub">{{ met.s }}</span>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+
+    {% if gh.calendar %}
+    <div class="panel reveal">
+        <div class="panel-head">
+            <h3 class="panel-title">{{ a.calendar.title }}</h3>
+            <div class="legend">
+                <span class="legend-label">{{ a.calendar.less }}</span>
+                {% for l in range(5) %}<i class="cell lvl-{{ l }}"></i>{% endfor %}
+                <span class="legend-label">{{ a.calendar.more }}</span>
+            </div>
+        </div>
+        <div class="calendar-scroll">
+            <div class="calendar" style="--weeks: {{ gh.calendar.weeks | length }}">
+                <div class="cal-months">
+                    {% for mo in gh.calendar.months %}<span class="cal-month" style="--week: {{ mo.week }}">{{ mo.label }}</span>{% endfor %}
+                </div>
+                <div class="cal-body">
+                    <div class="cal-days"><span>Mon</span><span>Wed</span><span>Fri</span></div>
+                    <div class="cal-grid">
+                        {% for week in gh.calendar.weeks %}
+                        <div class="cal-week">
+                            {% for day in week %}
+                                {% if day %}
+                                <i class="cell lvl-{{ day.level }}" data-date="{{ day.date }}" data-count="{{ day.count }}"></i>
+                                {% else %}<i class="cell empty"></i>{% endif %}
+                            {% endfor %}
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    {% if gh.languages %}
+    <div class="panel reveal">
+        <div class="panel-head">
+            <h3 class="panel-title">{{ a.languages.title }}</h3>
+            <span class="panel-note">{{ a.languages.note }}</span>
+        </div>
+        <div class="lang-bar">
+            {% for l in gh.languages %}<span class="lang-seg" style="--pct: {{ l.pct }}%; --c: {{ l.color }}" title="{{ l.name }} — {{ l.pct }}%"></span>{% endfor %}
+        </div>
+        <div class="lang-rows">
+            {% for l in gh.languages %}
+            <div class="lang-row">
+                <span class="lang-name"><i class="lang-dot" style="--c: {{ l.color }}"></i>{{ l.name }}</span>
+                <span class="lang-track"><span class="lang-fill" style="--pct: {{ l.pct }}%; --c: {{ l.color }}"></span></span>
+                <span class="lang-pct">{{ l.pct }}%</span>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+
+    {% if gh.repos %}
+    <div class="panel reveal">
+        <div class="panel-head">
+            <h3 class="panel-title">{{ a.repos.title }}</h3>
+            <a class="panel-link" href="{{ gh.user.url }}?tab=repositories" target="_blank" rel="noopener noreferrer">{{ a.repos.link }} <span class="arr">↗</span></a>
+        </div>
+        <div class="repo-list">
+            {% for r in gh.repos %}
+            <a class="repo-row" href="{{ r.url }}" target="_blank" rel="noopener noreferrer">
+                <span class="repo-name">{{ r.name }}</span>
+                <span class="repo-desc">{{ r.description or '—' }}</span>
+                <span class="repo-meta">
+                    {% if r.language %}<span class="repo-lang"><i class="lang-dot" style="--c: {{ r.language_color }}"></i>{{ r.language }}</span>{% endif %}
+                    <span class="repo-stars">★ {{ r.stars }}</span>
+                    <span class="repo-date">{{ r.pushed_at | humandate }}</span>
+                </span>
+            </a>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</section>
+
+{% if gh.external_groups %}
+<section class="section" id="open-source">
+    {{ m.section_head('', a.open_source.title, a.open_source.sub) }}
+    <div class="oss-groups">
+        {% for g in gh.external_groups %}
+        <div class="oss-group reveal{{ ' major' if g.major }}">
+            <div class="oss-group-head">
+                <div class="oss-group-id">
+                    {% if g.major %}<span class="oss-flag">{{ a.open_source.flag_major }}</span>{% endif %}
+                    <a class="oss-group-repo" href="{{ g.repo_url }}" target="_blank" rel="noopener noreferrer">
+                        <span class="oss-org">{{ g.repo.split('/')[0] }}/</span>{{ g.repo.split('/')[1] }} <span class="arr">↗</span>
+                    </a>
+                </div>
+                <div class="oss-group-figures">
+                    {{ m.figure(a.open_source.label_stars, g.stars | commas) }}
+                    {{ m.figure(a.open_source.label_contributions, g.contributions | length) }}
+                </div>
+            </div>
+            <div class="oss-items">
+                {% for x in g.contributions %}
+                <a class="oss-item" href="{{ x.url }}" target="_blank" rel="noopener noreferrer">
+                    <span class="oss-kind kind-{{ x.kind }}">{% if x.kind == 'pr' %}pull request{% elif x.kind == 'issue' %}issue{% else %}commented{% endif %}</span>
+                    <span class="oss-item-title">{{ x.title }}</span>
+                    <span class="oss-item-meta">
+                        {% if x.kind == 'pr' and x.additions is defined %}
+                        <span class="oss-diff"><span class="add">+{{ x.additions }}</span> <span class="del">−{{ x.deletions }}</span></span>
+                        {% endif %}
+                        <span class="oss-status {{ 'merged' if x.state == 'MERGED' else ('open' if x.state == 'OPEN' else 'closed') }}">{{ x.state | lower }}</span>
+                        <span class="oss-num">#{{ x.number }}</span>
+                    </span>
+                </a>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% if t.external_reach %}
+    <p class="oss-reach reveal">{{ a.open_source.reach_template.replace('{repos}', t.external_repos | string).replace('{stars}', t.external_reach | commas) }}</p>
+    {% endif %}
+</section>
+{% endif %}
+
+{% if gh.timeline %}
+<section class="section" id="recent">
+    {{ m.section_head('', a.feed.title, a.feed.sub) }}
+    <ol class="feed">
+        {% for x in gh.timeline %}
+        <li class="feed-item reveal">
+            <span class="feed-rail"><i class="feed-node kind-{{ x.kind }}"></i></span>
+            <div class="feed-body">
+                <div class="feed-line">
+                    <span class="feed-verb">
+                        {% if x.kind == 'pr' %}{{ 'Merged' if x.merged else 'Opened' }} a pull request in
+                        {% elif x.kind == 'issue' %}Opened an issue in
+                        {% else %}Commented on {{ 'a pull request' if x.on == 'pull request' else 'an issue' }} in{% endif %}
+                    </span>
+                    <a class="feed-repo" href="{{ x.repo_url }}" target="_blank" rel="noopener noreferrer">{{ x.repo }}</a>
+                    {% if x.external %}<span class="feed-tag">external</span>{% endif %}
+                </div>
+                <a class="feed-title" href="{{ x.url }}" target="_blank" rel="noopener noreferrer">{{ x.title }} <span class="feed-num">#{{ x.number }}</span></a>
+            </div>
+            <time class="feed-date" datetime="{{ x.date }}">{{ x.date | humandate }}</time>
+        </li>
+        {% endfor %}
+    </ol>
+</section>
+{% endif %}
+{% endif %}
+
+{% endblock %}
