@@ -1,6 +1,8 @@
-# whoareyou.plus
+# Whoami?
 
-My personal site, backend is Flask, no build step, no frontend framework.
+My personal portfolio site. The backend is Flask, there's no build step, and no frontend framework.
+
+**Live Site**: [whoareyou.plus](https://whoareyou.plus)
 
 ## Running locally
 
@@ -215,3 +217,17 @@ UPDATE_RESTART_CMD="mkdir -p tmp && touch tmp/restart.txt"  # Passenger
 Cron runs with a minimal environment, so `gh` is usually not on its `PATH`.
 Both cron scripts source `.env`, which is why the token belongs there rather
 than in your shell profile.
+
+## License
+
+This project is open source and available under the MIT License.
+
+## Contact
+
+- **Email**: apparentlyplus@gmail.com
+- **GitHub**: [@ApparentlyPlus](https://github.com/ApparentlyPlus)
+- **LinkedIn**: [Panagiotis Chatzikallias](https://www.linkedin.com/in/panagiotischatzikallias/)
+
+---
+
+Built with lots of goddamn coffee and late night coding sessions by [ApparentlyPlus](https://github.com/ApparentlyPlus)
