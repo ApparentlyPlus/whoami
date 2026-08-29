@@ -1,13 +1,4 @@
 #!/usr/bin/env python3
-"""
-Deployment readiness check. Run this on the box you're deploying to.
-
-    python preflight.py
-
-Prints a checklist and exits non-zero if anything is genuinely broken. FAIL
-means the site will not work; WARN means it will work but something is
-missing or suboptimal.
-"""
 
 import importlib.util
 import os
@@ -17,7 +8,8 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT))
 
 GREEN, YELLOW, RED, DIM, RESET = '\033[32m', '\033[33m', '\033[31m', '\033[2m', '\033[0m'
 if not sys.stdout.isatty():
@@ -25,29 +17,22 @@ if not sys.stdout.isatty():
 
 results = []
 
-
 def check(name, state, detail='', fix=''):
     results.append((name, state, detail, fix))
-
 
 def ok(name, detail=''):    check(name, 'OK', detail)
 def warn(name, detail, fix=''): check(name, 'WARN', detail, fix)
 def fail(name, detail, fix=''): check(name, 'FAIL', detail, fix)
 
-
-# --- 1. Interpreter --------------------------------------------------------
 v = sys.version_info
 if v >= (3, 11):
     ok('Python version', f'{v.major}.{v.minor}.{v.micro}')
 else:
     fail('Python version', f'{v.major}.{v.minor}, need 3.11+',
          'content.toml is parsed with the stdlib tomllib, added in 3.11.')
-
-# --- 2. Dependencies -------------------------------------------------------
 try:
     import importlib.metadata
-    import flask  # noqa: F401
-    # flask.__version__ is deprecated in 3.1 and gone in 3.2.
+    import flask
     ok('Flask', importlib.metadata.version('flask'))
 except ImportError:
     fail('Flask', 'not installed', 'pip install -r requirements.txt')
@@ -60,10 +45,8 @@ elif (ROOT / 'passenger_wsgi.py').exists() and os.environ.get('PASSENGER_BASE_UR
     ok('Production WSGI server', 'Passenger (supplied by the host)')
 else:
     warn('Production WSGI server', 'none installed',
-         'pip install -r requirements.txt  — do NOT serve with `python app.py`, '
+         'pip install -r requirements.txt, do NOT serve with `python app.py`, '
          'that is the Flask development server.')
-
-# --- 3. GitHub token -------------------------------------------------------
 try:
     import github_sync
     if github_sync.TOKEN:
@@ -83,7 +66,6 @@ try:
 except Exception as exc:
     fail('GitHub token', f'{exc.__class__.__name__}', str(exc).splitlines()[0])
 
-# --- 4. Content ------------------------------------------------------------
 try:
     import tomllib
     with open(ROOT / 'content.toml', 'rb') as fh:
@@ -94,7 +76,6 @@ except FileNotFoundError:
 except Exception as exc:
     fail('content.toml', f'does not parse: {exc}')
 
-# --- 5. Data snapshot ------------------------------------------------------
 snapshot = ROOT / 'data' / 'github.json'
 if not snapshot.exists():
     fail('GitHub snapshot', 'data/github.json missing',
@@ -114,9 +95,8 @@ else:
     except Exception as exc:
         fail('GitHub snapshot', f'unreadable: {exc}')
 
-# --- 6. Static assets ------------------------------------------------------
 missing = [str(p) for p in (
-    'resume/Chatzikallias_Panagiotis.pdf',
+    'static/resume/Chatzikallias_Panagiotis.pdf',
     'static/assets/avatar-632.jpg',
     'static/css/styles.css',
     'static/js/main.js',
@@ -126,7 +106,6 @@ if missing:
 else:
     ok('Static assets', 'resume, avatar, css, js present')
 
-# --- 7. Routes actually render --------------------------------------------
 try:
     import app as flask_app
     client = flask_app.app.test_client()
@@ -142,14 +121,12 @@ try:
 except Exception as exc:
     fail('Routes render', f'{exc.__class__.__name__}: {exc}')
 
-# --- 8. Debug must be off --------------------------------------------------
 if os.environ.get('FLASK_DEBUG'):
     fail('Debug mode', 'FLASK_DEBUG is set',
          'Never set this in production; it exposes an interactive debugger.')
 else:
     ok('Debug mode', 'off')
 
-# --- 9. Auto-update readiness ---------------------------------------------
 if not (ROOT / '.git').exists():
     warn('Auto-update', 'not a git repository', 'autoupdate.py cannot run here.')
 elif not shutil.which('git'):
@@ -177,8 +154,6 @@ else:
     else:
         ok('Restart hook', os.environ['UPDATE_RESTART_CMD'])
 
-
-# --- Report ----------------------------------------------------------------
 COLOURS = {'OK': GREEN, 'WARN': YELLOW, 'FAIL': RED}
 width = max(len(n) for n, *_ in results)
 print()

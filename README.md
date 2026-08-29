@@ -16,6 +16,31 @@ python app.py            # http://127.0.0.1:5000
 
 A GitHub token is required to start at all; the app refuses rather than serving a site with every GitHub-driven section silently empty. Set `GITHUB_TOKEN`, put it in `.env`, or be logged into `gh`. To start without one anyway:`ALLOW_NO_GITHUB_TOKEN=1`.
 
+## Layout
+
+The root holds only what has to live there: the app, its content file, the WSGI
+entry point Passenger looks for, and the dependency list. Everything
+operational is under `scripts/`.
+
+```
+app.py              the Flask app: routes, caching, gzip
+github_sync.py      GitHub API client; imported by the app, run by cron
+content.toml        every string on the site
+passenger_wsgi.py   WSGI entry point (Passenger requires it at the root)
+requirements.txt
+scripts/            operational tooling, none of it imported by the app
+  preflight.py        deployment readiness check
+  autoupdate.py       daily pull + verify + restart
+  sync-cron.sh        cron wrapper around github_sync.py
+  update-cron.sh      cron wrapper around autoupdate.py
+static/             css, js, fonts, images, and resume/ (served at /resume)
+templates/          Jinja templates
+data/               generated, git-ignored: snapshot + logs
+```
+
+Everything in `scripts/` resolves paths relative to the repo root, so the
+scripts work from any working directory.
+
 ## GitHub sync
 
 The Activity, Open Source and Recent Activity sections are generated from a
@@ -43,10 +68,10 @@ Two ways to keep it auto-updating:
    than 24h old, the app kicks off a background refresh and serves the existing
    snapshot meanwhile. Set `GITHUB_TOKEN` in the app's environment for this.
 2. **Cron.** More predictable on shared hosting where the process may be
-   recycled. Put the token in a `.env` file next to `sync-cron.sh` and add:
+   recycled. Put the token in a `.env` file at the repo root and add:
 
    ```
-   17 4 * * *  /path/to/whoami/sync-cron.sh >> /path/to/whoami/data/sync.log 2>&1
+   17 4 * * *  /path/to/whoami/scripts/sync-cron.sh >> /path/to/whoami/data/sync.log 2>&1
    ```
 
 `data/` is generated and git-ignored since it holds the snapshot plus the sync and update logs. Keeping it out of the repository is deliberate: the daily sync rewrites `github.json`, and a tracked file that changes every day would leave the working tree permanently dirty, which `autoupdate.py` treats (correctly) as a reason to refuse to update. 
@@ -96,7 +121,7 @@ Numbers from GitHub are never in `content.toml`, only the labels around them.
 
 ## Auto-update
 
-`autoupdate.py` pulls the latest source from GitHub once a day, verifies it, and
+`scripts/autoupdate.py` pulls the latest source from GitHub once a day, verifies it, and
 restarts the site. It is built to refuse rather than risk anything:
 
 * Aborts if the working tree has uncommitted changes to tracked files.
@@ -110,12 +135,12 @@ restarts the site. It is built to refuse rather than risk anything:
 * `flock` prevents overlapping runs.
 
 ```bash
-python autoupdate.py --check     # is an update available and safe? changes nothing
-python autoupdate.py --dry-run   # show exactly what would happen
-python autoupdate.py             # do it
+python scripts/autoupdate.py --check     # is an update available and safe? changes nothing
+python scripts/autoupdate.py --dry-run   # show exactly what would happen
+python scripts/autoupdate.py             # do it
 ```
 
-Configure with environment variables (or a `.env` beside the script):
+Configure with environment variables (or a `.env` at the repo root):
 
 | Variable             | Default  | Meaning                                    |
 |----------------------|----------|--------------------------------------------|
@@ -137,16 +162,18 @@ UPDATE_RESTART_CMD="docker compose up -d --build"          # Docker
 Then schedule it:
 
 ```
-17 4 * * *  /path/to/whoami/update-cron.sh
+17 4 * * *  /path/to/whoami/scripts/update-cron.sh
 ```
 
 
 ## Deployment
 
-Run the readiness check first since it verifies the interpreter, dependencies, token, content file, data snapshot, every route, and auto-update wiring:
+`scripts/preflight.py` verifies the interpreter, dependencies, token, content
+file, data snapshot, every route, and the auto-update wiring. Run it after
+step 2 and again after any change to the deployment:
 
 ```bash
-python preflight.py      # exits non-zero if anything is blocking
+python scripts/preflight.py      # exits non-zero if anything is blocking
 ```
 
 ### What actually runs what
@@ -157,23 +184,51 @@ is scheduled outside it:
 
 | Piece | Started by | Job |
 |---|---|---|
-| `wsgi.py` / `passenger_wsgi.py` | your WSGI server | serves the site |
-| `github_sync.py` | `sync-cron.sh`, daily | refreshes `data/github.json` |
-| `autoupdate.py` | `update-cron.sh`, daily | pulls new code, verifies, restarts |
+| `passenger_wsgi.py` | your WSGI server | serves the site |
+| `github_sync.py` | `scripts/sync-cron.sh`, daily | refreshes `data/github.json` |
+| `scripts/autoupdate.py` | `scripts/update-cron.sh`, daily | pulls new code, verifies, restarts |
 | `app.py` (lazy refresh) | first request after 24h | backstop if cron is missing |
 
 So a complete deployment is: a process manager keeping a WSGI server alive, plus two cron entries. Nothing supervises the process itself. That is the process manager's job, not this codebase's.
 
-### 1. Install
+### 1. Get the code
+
+**VPS:**
 
 ```bash
-pip install -r requirements.txt
-echo 'GITHUB_TOKEN=ghp_...' > .env      # chmod 600
-python github_sync.py                   # data/ is gitignored, create it once
-python preflight.py
+sudo mkdir -p /srv/whoami && cd /srv/whoami
+git clone https://github.com/ApparentlyPlus/whoami.git .
+python3 -m venv venv                        # the systemd unit below expects this path
+./venv/bin/pip install -r requirements.txt
 ```
 
-### 2. Serve
+**Shared hosting**, where the system site-packages usually aren't writable:
+
+```bash
+cd ~/whoami
+git clone https://github.com/ApparentlyPlus/whoami.git .
+pip install --user -r requirements.txt
+```
+
+Clone it, don't upload it. `scripts/autoupdate.py` fast-forwards a real
+checkout against its upstream, so a directory that was copied into place can
+never update itself.
+
+### 2. Configure
+
+```bash
+echo 'GITHUB_TOKEN=ghp_...' > .env && chmod 600 .env
+python github_sync.py                   # data/ is gitignored, create it once
+python scripts/preflight.py
+```
+
+Both of those are prerequisites for the first start:
+
+* **The token must exist before the app boots.** `app.py` calls
+  `github_sync.require_token()` at import, so without one the process exits instead of serving a site with every GitHub section silently empty. To bring it up anyway while you sort the token out, set `ALLOW_NO_GITHUB_TOKEN=1`.
+* **The snapshot must exist before the app boots.** `data/` is git-ignored, so a fresh clone has none and preflight reports it as a **FAIL** rather than a  warning. Nothing GitHub-driven renders until `github_sync.py` has run once.
+
+### 3. Serve
 
 **VPS with systemd** `/etc/systemd/system/whoami.service`:
 
@@ -185,7 +240,7 @@ After=network.target
 [Service]
 WorkingDirectory=/srv/whoami
 EnvironmentFile=/srv/whoami/.env
-ExecStart=/srv/whoami/venv/bin/gunicorn --bind 127.0.0.1:8000 --workers 3 wsgi:application
+ExecStart=/srv/whoami/venv/bin/gunicorn --bind 127.0.0.1:8000 --workers 3 passenger_wsgi:application
 Restart=always
 
 [Install]
@@ -198,13 +253,21 @@ systemctl enable --now whoami
 
 Then put nginx or Caddy in front for TLS and to serve `/static` directly.
 
-**cPanel / Passenger**: point the app at `passenger_wsgi.py`. Passenger runs it for you, so gunicorn is unused there. Set `GITHUB_TOKEN` in the panel's environment variables (there is no `gh` on shared hosting), and restart by touching `tmp/restart.txt`.
+**cPanel / Passenger**: in *Setup Python App*, set the application root to the
+clone and the **startup file** to `passenger_wsgi.py` (the application object
+is `application`). Passenger starts the process for you, so gunicorn goes
+unused and there is nothing to run by hand. Add `GITHUB_TOKEN` under the
+panel's environment variables as well as in `.env`. The panel's copy is what the web process sees, and `.env` is what cron sees, since there is no `gh` on shared hosting. Restart by touching the file Passenger watches:
 
-### 3. Schedule
+```bash
+mkdir -p tmp && touch tmp/restart.txt
+```
+
+### 4. Schedule
 
 ```
-17 4 * * *  /srv/whoami/update-cron.sh    # pull + verify + restart
-47 4 * * *  /srv/whoami/sync-cron.sh      # refresh GitHub data
+17 4 * * *  /srv/whoami/scripts/update-cron.sh    # pull + verify + restart
+47 4 * * *  /srv/whoami/scripts/sync-cron.sh      # refresh GitHub data
 ```
 
 Set the restart hook so updates take effect. In `.env`:

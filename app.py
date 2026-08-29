@@ -229,7 +229,7 @@ def github_json():
 
 @app.route('/resume')
 def resume():
-    return send_from_directory('resume', 'Chatzikallias_Panagiotis.pdf')
+    return send_from_directory('static/resume', 'Chatzikallias_Panagiotis.pdf')
 
 
 @app.route('/healthz')

@@ -8,7 +8,7 @@ import time
 from datetime import datetime, timezone
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parent.parent
 LOG_FILE = ROOT / 'data' / 'update.log'
 LOCK_FILE = ROOT / 'data' / '.update.lock'
 QUARANTINE = ROOT / 'data' / '.update-quarantine'
