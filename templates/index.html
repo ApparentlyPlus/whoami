@@ -35,36 +35,6 @@
         </figure>
     </div>
 
-    {% if gh and gh.calendar %}
-    {%- set weekly -%}{%- for w in gh.calendar.weeks -%}{{ w | select | map(attribute='count') | sum }}{{ ',' if not loop.last }}{%- endfor -%}{%- endset -%}
-    {%- set weekdates -%}{%- for w in gh.calendar.weeks -%}{{ (w | select | list | first).date }}{{ ',' if not loop.last }}{%- endfor -%}{%- endset -%}
-    {%- set monthmap -%}{%- for mo in gh.calendar.months -%}{{ mo.label }}:{{ mo.week }}{{ ',' if not loop.last }}{%- endfor -%}{%- endset -%}
-
-    <div class="instrument reveal">
-        <div class="instrument-head">
-            <div>
-                <div class="instrument-title">{{ h.hero.card.title }}</div>
-                <div class="instrument-sub">{{ h.hero.card.sub }}</div>
-            </div>
-            <a class="instrument-open" href="{{ gh.user.url }}" target="_blank"
-               rel="noopener noreferrer" aria-label="Open GitHub profile">↗</a>
-        </div>
-
-        <div class="readout instrument-readout">
-            <span data-count="{{ gh.calendar.total }}">{{ gh.calendar.total }}</span>
-            <span class="unit">{{ h.hero.card.unit }}</span>
-        </div>
-
-        <div class="instrument-chart" data-series="{{ weekly }}" data-weeks="{{ weekdates }}" data-months="{{ monthmap }}"></div>
-
-        <div class="instrument-foot">
-            {{ m.figure(h.hero.card.foot_peak, gh.calendar.max) }}
-            {{ m.figure(h.hero.card.foot_commits, t.commits_year) }}
-            {{ m.figure(h.hero.card.foot_repos, t.public_repos) }}
-            {% if t.external_reach %}{{ m.figure(h.hero.card.foot_reach, t.external_reach, h.hero.card.foot_reach_unit) }}{% endif %}
-        </div>
-    </div>
-    {% endif %}
 </section>
 
 <!-- Upstream -->
@@ -153,6 +123,37 @@
 {% set a = h.activity_strip %}
 <section class="section" id="activity">
     {{ m.section_head(a.index, a.title, a.sub, m.sync_badge(gh)) }}
+
+    {% if gh and gh.calendar %}
+    {%- set weekly -%}{%- for w in gh.calendar.weeks -%}{{ w | select | map(attribute='count') | sum }}{{ ',' if not loop.last }}{%- endfor -%}{%- endset -%}
+    {%- set weekdates -%}{%- for w in gh.calendar.weeks -%}{{ (w | select | list | first).date }}{{ ',' if not loop.last }}{%- endfor -%}{%- endset -%}
+    {%- set monthmap -%}{%- for mo in gh.calendar.months -%}{{ mo.label }}:{{ mo.week }}{{ ',' if not loop.last }}{%- endfor -%}{%- endset -%}
+
+    <div class="instrument reveal">
+        <div class="instrument-head">
+            <div>
+                <div class="instrument-title">{{ a.card.title }}</div>
+                <div class="instrument-sub">{{ a.card.sub }}</div>
+            </div>
+            <a class="instrument-open" href="{{ gh.user.url }}" target="_blank"
+               rel="noopener noreferrer" aria-label="Open GitHub profile">↗</a>
+        </div>
+
+        <div class="readout instrument-readout">
+            <span data-count="{{ gh.calendar.total }}">{{ gh.calendar.total }}</span>
+            <span class="unit">{{ a.card.unit }}</span>
+        </div>
+
+        <div class="instrument-chart" data-series="{{ weekly }}" data-weeks="{{ weekdates }}" data-months="{{ monthmap }}"></div>
+
+        <div class="instrument-foot">
+            {{ m.figure(a.card.foot_peak, gh.calendar.max) }}
+            {{ m.figure(a.card.foot_commits, t.commits_year) }}
+            {{ m.figure(a.card.foot_repos, t.public_repos) }}
+            {% if t.external_reach %}{{ m.figure(a.card.foot_reach, t.external_reach, a.card.foot_reach_unit) }}{% endif %}
+        </div>
+    </div>
+    {% endif %}
 
     <div class="metric-grid">
         {% for met in [

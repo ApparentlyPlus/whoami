@@ -84,27 +84,38 @@
             }
         });
 
-        function moveBubble(el) {
+        function moveBubble(el, instant) {
             if (!el) { navBubble.style.opacity = '0'; return; }
             var w = el.offsetWidth;
             var h = el.offsetHeight;
             if (!w || !h) { navBubble.style.opacity = '0'; return; }
+            if (instant) {
+                // Jump to the item with no transition, so the only thing that
+                // animates on open is the fade.
+                navBubble.classList.add('snap');
+                navBubble.style.opacity = '0';
+                navBubble.style.setProperty('--i', el.style.getPropertyValue('--i') || 0);
+            }
             navBubble.style.width = w + 'px';
             navBubble.style.height = h + 'px';
             navBubble.style.transform =
                 'translate3d(' + el.offsetLeft + 'px,' + el.offsetTop + 'px,0)';
+            if (instant) {
+                void navBubble.offsetWidth;
+                navBubble.classList.remove('snap');
+            }
             navBubble.style.opacity = '1';
         }
 
         var heldItem = null;
 
-        syncNavBubble = function () {
+        syncNavBubble = function (instant) {
             if (heldItem) { return; }
             if (!narrow.matches || !nav.classList.contains('open')) {
                 navBubble.style.opacity = '0';
                 return;
             }
-            moveBubble(navPanel.querySelector('.active'));
+            moveBubble(navPanel.querySelector('.active'), instant);
         };
 
         navItems.forEach(function (el) {
@@ -143,7 +154,7 @@
                 nav.style.setProperty('--panel-h', navPanel.scrollHeight + 'px');
             }
             if (narrow.matches) { navPanel.inert = !open; }
-            requestAnimationFrame(syncNavBubble);
+            requestAnimationFrame(function () { syncNavBubble(open); });
         }
 
         function applyViewport() {
@@ -461,9 +472,16 @@
             }
         }
         host.addEventListener('pointermove', queueMove);
-        host.addEventListener('pointerdown', queueMove);
+        host.addEventListener('pointerdown', function (e) {
+            if (e.pointerType !== 'mouse' && host.setPointerCapture) {
+                try { host.setPointerCapture(e.pointerId); } catch (err) {}
+            }
+            queueMove(e);
+        });
         function leaveChart() { pendingX = null; clearCursor(); }
-        host.addEventListener('pointerleave', leaveChart);
+        host.addEventListener('pointerleave', function (e) {
+            if (e.pointerType === 'mouse') { leaveChart(); }
+        });
         host.addEventListener('pointercancel', leaveChart);
         // A tap leaves the readout up until you touch elsewhere.
         document.addEventListener('pointerdown', function (e) {
@@ -492,18 +510,31 @@
     // Calendar cells
     var grid = document.querySelector('.cal-grid');
     if (grid && tip) {
-        grid.addEventListener('mouseover', function (e) {
-            var cell = e.target.closest('.cell[data-date]');
-            if (!cell) { return; }
+        function showCell(cell) {
             var n = parseInt(cell.getAttribute('data-count'), 10) || 0;
             var box = cell.getBoundingClientRect();
             showTip(fmtDay(cell.getAttribute('data-date'),
                            { weekday: 'short', month: 'short', day: 'numeric' }), n,
                     n === 1 ? 'contribution' : 'contributions',
                     box.left + box.width / 2, box.top);
+        }
+        grid.addEventListener('pointerover', function (e) {
+            if (e.pointerType !== 'mouse') { return; }
+            var cell = e.target.closest('.cell[data-date]');
+            if (cell) { showCell(cell); }
         });
-        grid.addEventListener('mouseout', function (e) {
+        grid.addEventListener('pointerout', function (e) {
+            if (e.pointerType !== 'mouse') { return; }
             if (e.target.closest('.cell[data-date]')) { hideTip(); }
+        });
+        // Touch: tap a day to read it, and it stays until you touch elsewhere.
+        grid.addEventListener('pointerdown', function (e) {
+            if (e.pointerType === 'mouse') { return; }
+            var cell = e.target.closest('.cell[data-date]');
+            if (cell) { showCell(cell); }
+        });
+        document.addEventListener('pointerdown', function (e) {
+            if (e.pointerType !== 'mouse' && !grid.contains(e.target)) { hideTip(); }
         });
     }
 

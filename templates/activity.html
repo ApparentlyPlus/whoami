@@ -26,14 +26,14 @@
     <div class="instrument reveal">
         <div class="instrument-head">
             <div>
-                <div class="instrument-title">{{ c.home.hero.card.title }}</div>
-                <div class="instrument-sub">{{ c.home.hero.card.sub }}</div>
+                <div class="instrument-title">{{ c.home.activity_strip.card.title }}</div>
+                <div class="instrument-sub">{{ c.home.activity_strip.card.sub }}</div>
             </div>
             <a class="instrument-open" href="{{ gh.user.url }}" target="_blank" rel="noopener noreferrer" aria-label="Open GitHub profile">↗</a>
         </div>
         <div class="readout instrument-readout">
             <span data-count="{{ gh.calendar.total }}">{{ gh.calendar.total }}</span>
-            <span class="unit">{{ c.home.hero.card.unit }}</span>
+            <span class="unit">{{ c.home.activity_strip.card.unit }}</span>
         </div>
         <div class="instrument-chart" data-series="{{ weekly }}" data-weeks="{{ weekdates }}" data-months="{{ monthmap }}"></div>
     </div>

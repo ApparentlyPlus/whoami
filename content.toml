@@ -81,7 +81,7 @@ href  = "https://www.linkedin.com/in/panagiotischatzikallias/"
 
 [home.hero]
 eyebrow = "Full-Stack & Systems Engineer"
-title   = "I ship secure, full-stack products by day and <em>architect the systems they run on</em> by night."
+title   = "I ship secure, full-stack products by day and <em>architect the systems they run on by night.</em>"
 lede    = """
 CS student at the University of Macedonia, where I've finished four years
 of coursework in three. Competitive security got me started and taught me how
@@ -101,18 +101,6 @@ label = "Résumé"
 href  = "/resume"
 style = "ghost"
 arrow = true
-
-# The instrument card under the hero
-
-[home.hero.card]
-title = "Contribution Volume"
-sub   = "Commits, pull requests and reviews · rolling 12 months"
-unit  = "this year"
-foot_peak    = "Peak day"
-foot_commits = "Commits"
-foot_repos   = "Public repos"
-foot_reach   = "Upstream reach"
-foot_reach_unit = "stars"
 
 # UPSTREAM
 
@@ -272,6 +260,19 @@ title = "Activity"
 sub   = "Pulled straight from the GitHub API and refreshed daily."
 link_label = "Full activity breakdown"
 link_href  = "/activity"
+
+# The contribution chart, shown at the top of the Activity strip
+
+[home.activity_strip.card]
+title = "Contribution Volume"
+sub   = "Commits, pull requests and reviews · rolling 12 months"
+unit  = "this year"
+foot_peak    = "Peak day"
+foot_commits = "Commits"
+foot_repos   = "Public repos"
+foot_reach   = "Upstream reach"
+foot_reach_unit = "stars"
+
 
 # Experience
 
