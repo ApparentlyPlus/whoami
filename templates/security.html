@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% import "_macros.html" as m %}
+{% set s = c.security %}
+{% block title %}{{ s.page_title }}{% endblock %}
+{% block content %}
+
+<section class="page-head">
+    <p class="hero-eyebrow reveal"><i class="dot"></i>{{ s.eyebrow }}</p>
+    <h1 class="case-title reveal">{{ s.title }}</h1>
+    <p class="case-tagline reveal">{{ s.tagline | safe }}</p>
+    <div class="case-head-grid reveal">
+        <p class="page-lede">{{ s.lede }}</p>
+        <div class="case-stats">
+            {% for st in s.stats %}
+            <div class="figure">
+                <span class="label">{{ st.label }}</span>
+                <span class="readout readout-sm">{{ st.value }}</span>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Where it started -->
+<section class="section">
+    <div class="section-split">
+        {{ m.section_head('01', s.start.title) }}
+        <div class="prose reveal">
+            {% for para in s.start.paras %}<p>{{ para }}</p>{% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- The record -->
+<section class="section">
+    <div class="section-split">
+    {{ m.section_head('02', s.record.title) }}
+    <div>
+    <p class="prose split-intro reveal">{{ s.record.body }}</p>
+    <ol class="steps">
+        {% for r in s.record.steps %}
+        <li class="step reveal">
+            <span class="step-index mono">{{ r.step }}</span>
+            <div class="step-body">
+                <h3 class="step-title">{{ r.title }}</h3>
+                <p class="step-desc">{{ r.desc }}</p>
+                {% if r.link is defined %}
+                <a class="card-link" href="{{ r.link }}" target="_blank" rel="noopener noreferrer">{{ r.link_label }} <span class="arr">&#8599;</span></a>
+                {% endif %}
+            </div>
+        </li>
+        {% endfor %}
+    </ol>
+    </div>
+    </div>
+</section>
+
+<!-- Where it is now -->
+<section class="section">
+    <div class="section-split">
+        {{ m.section_head('03', s.now.title) }}
+        <div class="prose reveal">
+            {% for para in s.now.paras %}<p>{{ para }}</p>{% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Two things worth clicking -->
+<section class="section">
+    <div class="section-split">
+    {{ m.section_head('04', s.work.title, s.work.sub) }}
+    <div class="piece-list">
+        {% for item in s.work.pieces %}
+        <article class="piece reveal">
+            <div class="piece-head">
+                <div>
+                    <h3 class="piece-name mono">{{ item.name }}</h3>
+                    <span class="piece-role">{{ item.role }}</span>
+                </div>
+            </div>
+            <p class="piece-desc">{{ item.desc }}</p>
+            <div class="piece-foot">
+                <span class="tag">{{ item.meta }}</span>
+                {% if item.link is defined %}
+                <a class="card-link" href="{{ item.link }}" target="_blank" rel="noopener noreferrer">{{ item.link_label }} <span class="arr">↗</span></a>
+                {% endif %}
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+    </div>
+</section>
+
+<!-- Close -->
+<section class="section contact">
+    <div class="contact-inner reveal">
+        <h2 class="contact-title">{{ s.close.title }}</h2>
+        <p class="contact-lede">{{ s.close.body }}</p>
+        <div class="contact-actions">
+            <a href="mailto:{{ site.email }}" class="btn btn-primary">{{ s.close.primary_label }}</a>
+            <a href="{{ s.close.ghost_href }}" class="btn btn-ghost">{{ s.close.ghost_label }}</a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

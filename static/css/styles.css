@@ -867,6 +867,18 @@ code, .mono {
 }
 .card:hover .card-link { color: var(--accent); }
 .card:hover .card-link .arr { transform: translate(2px,-2px); }
+.card-link:hover { color: var(--accent); }
+.card-link:hover .arr { transform: translate(2px,-2px); }
+
+.section-note {
+    margin-bottom: 38px;
+    font-size: 16px;
+    line-height: 1.85;
+    color: var(--text-2);
+    padding-left: 20px;
+    border-left: 1px solid var(--accent-line);
+    text-wrap: pretty;
+}
 
 /* Metric tiles */
 
@@ -1366,6 +1378,16 @@ code, .mono {
     font-size: 12.5px;
     color: var(--muted);
 }
+.footer-tag a {
+    color: var(--text-2);
+    text-decoration: underline;
+    text-decoration-color: var(--accent-line);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    transition: color .25s var(--ease), text-decoration-color .25s var(--ease);
+}
+.footer-tag a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+
 .footer-links { display: flex; gap: 20px; }
 .footer-links a { transition: color .25s var(--ease); }
 .footer-links a:hover { color: var(--accent); }
@@ -1570,6 +1592,9 @@ code, .mono {
     color: var(--text-2);
 }
 
+.step .card-link { margin-top: 12px; }
+.step:hover .card-link { color: var(--accent); }
+
 /* The three pieces */
 
 .piece-list { display: flex; flex-direction: column; gap: 16px; }
@@ -1625,6 +1650,8 @@ code, .mono {
 .piece:hover .card-link { color: var(--accent); }
 
 @media (max-width: 860px) {
+    .section-note { font-size: 15px; line-height: 1.78; }
+
     .nav {
         gap: 0 10px;
         padding: 7px 8px;

@@ -4,36 +4,32 @@
 #
 #  * Inline HTML is allowed in any text field. <em> is styled as the amber
 #    accent, <strong> as bright text. Use it sparingly.
-#  * Triple-quoted """ strings can span lines; line breaks inside them are
+#  * Triple-quoted """ strings can span lines. Line breaks inside them are
 #    collapsed into spaces when rendered, so wrap however reads best.
 #  * Anything under [data] is pulled live from GitHub and is NOT editable
-#    here — only the labels around it are.
+#    here. Only the labels around it are.
 #  * Lines starting with # are comments and are ignored.
 
 # Identity and metadata (used in <head>, Open Graph cards, the footer)
 
 [site]
 name         = "Panagiotis Chatzikallias"
-role         = "Systems & Full-Stack Engineer"
+role         = "Full-Stack & Systems Engineer"
 location     = "Thessaloniki, Greece"
 location_short = "Thessaloniki, GR"
 url          = "https://whoareyou.plus"
 email        = "apparentlyplus@gmail.com"
 github       = "https://github.com/ApparentlyPlus"
 linkedin     = "https://www.linkedin.com/in/panagiotischatzikallias/"
-brand        = "panagiotis"
-title        = "Panagiotis Chatzikallias — Systems & Full-Stack Engineer"
-description  = "Panagiotis Chatzikallias — systems & full-stack engineer. Kernels, compilers, and shipped products. University of Macedonia."
-tagline      = "I build things close to the metal — kernels, compilers, and the products on top of them."
-keywords     = "Panagiotis Chatzikallias, ApparentlyPlus, GatOS, PawStack, compilers, operating systems, systems programming, full-stack"
+brand        = "whoami.sh"
+title        = "Panagiotis Chatzikallias - Full-Stack & Systems Engineer"
+description  = "Panagiotis Chatzikallias, a full-stack and systems engineer in Thessaloniki. Final-year CS student at the University of Macedonia, building products and the systems underneath them."
+tagline      = "I ship secure, full-stack products by day and architect the systems they run on by night."
+keywords     = "Panagiotis Chatzikallias, ApparentlyPlus, full-stack engineer, systems programming, application security, CTF, responsible disclosure, HackTheBox, PawStack, GatOS, University of Macedonia"
 preview_image = "assets/preview/preview.jpg"
 avatar_alt   = "Panagiotis Chatzikallias"
 
 # Top navigation. Order here is the order on screen.
-
-[[nav]]
-label = "Work"
-href  = "/#work"
 
 [[nav]]
 label = "Upstream"
@@ -41,8 +37,16 @@ href  = "/#upstream"
 requires = "highlight"
 
 [[nav]]
+label = "Work"
+href  = "/#work"
+
+[[nav]]
 label = "PawStack"
 href  = "/pawstack"
+
+[[nav]]
+label = "Security"
+href  = "/security"
 
 [[nav]]
 label = "Activity"
@@ -58,7 +62,7 @@ href  = "/resume"
 
 
 [footer]
-tagline = "Built from scratch · GitHub data synced daily"
+tagline = "<a href=\"https://github.com/ApparentlyPlus/whoami\" target=\"_blank\" rel=\"noopener noreferrer\">Built from scratch</a> · Hosted on a Raspberry Pi 4B · GitHub data synced daily"
 copyright = "Panagiotis Chatzikallias · Thessaloniki, Greece"
 
 [[footer.links]]
@@ -76,14 +80,13 @@ href  = "https://www.linkedin.com/in/panagiotischatzikallias/"
 # Home Page
 
 [home.hero]
-eyebrow = "Systems & Full-Stack Engineer"
-title   = "I build things close to the metal — <em>kernels, compilers,</em> and the products on top of them."
+eyebrow = "Full-Stack & Systems Engineer"
+title   = "I ship secure, full-stack products by day and <em>architect the systems they run on</em> by night."
 lede    = """
-Final-year CS student at the University of Macedonia, finishing a four-year
-degree in three and graduating September 2026. My thesis is a working OS
-toolchain — a kernel, a language, and a compiler that turns a program into a
-bootable operating system. When I'm not down at the bare metal, I ship
-full-stack products and land patches in other people's codebases.
+CS student at the University of Macedonia, where I've finished four years
+of coursework in three. Competitive security got me started and taught me how
+things break. Building things people actually use is what I do with that.
+Going a layer deeper is what I do for fun.
 """
 portrait_name = "Panagiotis Chatzikallias"
 portrait_line = "Thessaloniki, GR"
@@ -114,7 +117,7 @@ foot_reach_unit = "stars"
 # UPSTREAM
 
 [home.upstream]
-index = "02"
+index = "01"
 title = "Upstream"
 sub   = "Code I've landed in projects that aren't mine."
 
@@ -128,7 +131,7 @@ more_href  = "/activity#open-source"
 # Wording by repo scale. Placeholders: {repo} {owner} {name} {stars} {contributors} {state} {kind} {title} {number}
 
 [home.upstream.tiers]
-major   = "{article} {state} {kind} in {repo} — one of the largest open-source codebases in the ecosystem, at {stars} stars. Real review process, maintained in the open."
+major   = "{article} {state} {kind} in {repo}, one of the largest open-source codebases around at {stars} stars. Real review process, maintained in the open."
 notable = "{article} {state} {kind} in {repo}, a widely used open-source project with {stars} stars."
 active  = "{article} {state} {kind} in {repo}, an actively maintained open-source project with {stars} stars."
 small   = "{article} {state} {kind} in {repo}."
@@ -145,7 +148,7 @@ The codebase behind every C# program that ships.
 # Selected Work
 
 [home.work]
-index = "01"
+index = "02"
 title = "Selected work"
 sub   = "A few projects I'd want you to look at first."
 
@@ -156,11 +159,12 @@ tagline = "A toolchain where your program <em>is</em> the operating system."
 badge   = "Feature complete"
 body    = """
 Write ordinary-looking code, compile it, and get a bootable OS image instead of
-an executable. The compiler reads your program to decide what kind of operating
-system you actually need — never allocate, and no heap is built; never spawn a
-thread, and the scheduler doesn't ship. Three pieces, designed and built end to
-end: a modular x86-64 kernel, a statically-typed systems language, and the
-compiler that ties them together.
+an executable. Most operating systems carry every feature a program might one
+day ask for. PawStack works out what yours actually asks for and leaves the
+rest out: no memory allocation in your code means no memory allocator in the
+image, no threads means no scheduler. Three pieces, built end to end: a modular
+x86-64 kernel, a statically-typed systems language, and the compiler that ties
+them together.
 """
 link_label = "Read the full case study"
 link_href  = "/pawstack"
@@ -168,7 +172,7 @@ link_href  = "/pawstack"
 [[home.work.flagship.components]]
 name = "GatOS"
 repo = "GatOS"
-desc = "A modular x86-64 kernel — memory, threads, userspace, display and USB. The backbone."
+desc = "A modular x86-64 kernel covering memory, threads, userspace, display and USB. The backbone."
 meta = "C · freestanding"
 
 [[home.work.flagship.components]]
@@ -184,14 +188,14 @@ desc = "The compiler: a real frontend, IR and backend on .NET 10 AOT. Emits C, b
 meta = "C# · .NET 10 AOT"
 
 [[home.work.projects]]
-title = "Intellectiva AI — Athens transit"
+title = "Intellectiva AI - Athens transit"
 badge = "2nd place"
 badge_style = "award"
 desc = """
 AI-driven transit optimization. A regression model predicts passenger flow from
-open data to re-time trains against subway congestion — Python/ONNX inference
-backend, Node.js real-time frontend. Awarded 2nd at the Apps4Athens hackathon,
-now being finalised as a B2G contract with OASA for a 2026 deployment.
+open data so trains can be re-timed against subway congestion. Python and ONNX
+on the inference side, Node.js for the real-time frontend. It took 2nd at the
+Apps4Athens hackathon, and we're in talks with OASA about a pilot.
 """
 tags = ["Full-stack", "ML · ONNX"]
 link = "https://github.com/Apps4Athens-Hackathon-2-0/53_Intellectiva"
@@ -202,11 +206,38 @@ title = "UniNotes"
 badge = "Full-stack"
 desc = """
 A collaborative note-taking platform for students, built with Blazor (.NET),
-MongoDB and SQL — real-time updates and a full auth system. Test-run at our
-university with fellow students.
+MongoDB and SQL, with real-time updates and a full auth system. We test-ran it
+at our university with fellow students.
 """
 tags = ["Blazor", "MongoDB"]
 link = "https://github.com/daglaroglou/UniNotes"
+link_label = "Repository"
+
+[[home.work.projects]]
+title = "MadMath on HackTheBox"
+badge = "4.9 / 5"
+badge_style = "award"
+desc = """
+A cryptography challenge I wrote, live on the HackTheBox platform. 339 people
+have solved it so far and 119 have rated it, averaging 4.9 out of 5. HTB paid
+for it, which was a nice surprise for something that started as a puzzle I
+wanted to exist.
+"""
+tags = ["Cryptography", "HackTheBox"]
+link = "https://app.hackthebox.com/challenges/MadMath"
+link_label = "Solve it"
+
+[[home.work.projects]]
+title = "Marina"
+badge = "Internals"
+repo  = "Marina"
+desc = """
+A reimplementation of the Windows PE loader in C#, mapping and running an
+executable straight from memory the way the OS does it. It ended up as a live
+demo in my university's Operating Systems lectures, which is the best outcome
+a side project of mine has had.
+"""
+tags = ["C#", "Windows internals"]
 link_label = "Repository"
 
 [[home.work.projects]]
@@ -214,21 +245,21 @@ title = "CCPEL"
 badge = "Compiler"
 repo  = "CCPEL"
 desc = """
-A minimal compiler for a Lisp-like language that emits native x86 assembly —
-lexer, parser and codegen in pure C. A smaller warm-up for the compiler work
-in PawStack.
+A minimal compiler for a Lisp-like language that emits native x86 assembly.
+Lexer, parser and codegen in pure C. A warm-up for the much bigger compiler
+work that came after it.
 """
 tags = ["C", "x86 asm"]
 link_label = "Repository"
 
 [[home.work.projects]]
-title = "fdlibm — freestanding"
+title = "fdlibm - freestanding"
 badge = "Systems"
 repo  = "fdlibm_freestanding"
 desc = """
-A freestanding, architecture-independent math library in pure C99 —
-plug-and-play, no libc, no OS. Built to give GatOS a floating-point
-implementation it could depend on.
+A freestanding, architecture-independent math library in pure C99. No libc, no
+OS, drop it in and it works. I wrote it because GatOS needed floating point it
+could actually rely on.
 """
 tags = ["C99", "Freestanding"]
 link_label = "Repository"
@@ -247,37 +278,29 @@ link_href  = "/activity"
 [home.experience]
 index = "04"
 title = "Experience"
-sub   = "Where the code meets people who depend on it."
-
-[[home.experience.roles]]
-period = "2025 — present"
-role   = "Co-Founder & Lead Engineer"
-org    = "Intellectiva AI"
-desc = """
-Leading the technical transition of our hackathon-winning transit MVP into a
-production service, and part of the negotiations with OASA (Athens Transport)
-to finalise a B2G contract for 2026.
-"""
-
-[[home.experience.roles]]
-period = "2025 — present"
-role   = "ML Engineer"
-org    = "Intellectiva AI × Meteo.gr"
-desc = """
-Architecting a Small Language Model pipeline for Greece's leading weather
-service — an intent classifier and NER layer feeding a compact model, wired to
-Meta's messaging APIs to handle high-concurrency user queries in production.
-"""
+sub   = "The work that left my own machine."
 
 [[home.experience.roles]]
 period = "2025"
 role   = "Responsible Disclosure"
-org    = "Coordinated via MITRE"
+org    = "Unistudents · coordinated via MITRE"
 desc = """
-Identified and led the coordinated disclosure of a critical authorization flaw
-in Unistudents, a university dashboard app with 100k+ downloads, averting
-potential financial loss for its sponsors. A CVE assignment has been approved
-and is pending publication.
+Found a critical authorization flaw in a university dashboard app with more
+than 100k downloads, in a path that could have cost its sponsors real money. I
+reported it, worked the fix through with the vendor, and filed with MITRE. The
+CVE is approved and waiting on publication.
+"""
+
+[[home.experience.roles]]
+period = "2025 - present"
+role   = "Co-Founder & Engineer"
+org    = "Intellectiva AI"
+desc = """
+A company two friends and I started after our transit prototype took 2nd at
+Apps4Athens. I do the engineering: the transit model itself, and a Small
+Language Model pipeline we're building for Greece's biggest weather service,
+wired into Meta's messaging APIs. The OASA pilot is still a conversation, not
+a contract.
 """
 
 # Recognition
@@ -285,50 +308,63 @@ and is pending publication.
 [home.recognition]
 index = "05"
 title = "Recognition"
-sub   = "Degrees ahead of schedule, and a competitive streak."
+sub   = "Finishing early, and a competitive streak I never quite shook."
+link_label = "The security side of that"
+link_href  = "/security"
+note = """
+I finished the four-year curriculum in three, thesis included. What I had not
+accounted for is that the law does not allow it. You cannot present an
+undergraduate thesis before your fourth year, and the presentation is what
+carries the ECTS that complete the degree, so the system records me as not
+having met the requirements while the work sits finished on my end. The
+earliest I can present is the January exam session, and the earliest the degree
+can be conferred is summer 2027. Nothing about that is outstanding work. The
+calendar simply has no path for someone finishing this early.
+"""
 
 [[home.recognition.awards]]
-year  = "2023 — 2026"
-title = "Accelerated BSc + kernel thesis"
-desc  = "A four-year degree in three, graduating September 2026, with a systems-level OS thesis. GPA 8.3 / 10."
-
-[[home.recognition.awards]]
-year  = "2025"
-title = "HackTheBox challenge author"
-desc  = "Authored a cryptography challenge under final review for paid inclusion on the HTB platform."
+year  = "2023 - 2027"
+title = "Four years of coursework in three"
+desc  = "The full curriculum done in three years, thesis written, GPA 8.3 / 10. Presenting January 2027."
 
 [[home.recognition.awards]]
 year  = "Nov 2025"
-title = "Apps4Athens — 2nd place"
-desc  = "Silver for our AI transit-optimization prototype; direct line to OASA executives."
+title = "Apps4Athens - 2nd place"
+desc  = "Silver for our AI transit prototype, and a direct line to OASA out of it."
 
 [[home.recognition.awards]]
 year  = "2025"
-title = "SEERC — regional finalist"
-desc  = "Finalist at the South Eastern European Regional Contest, 2025."
+title = "SEERC - regional finalist"
+desc  = "Made the finals of the South Eastern European Regional Contest, the ICPC round for our part of the map."
 
 [[home.recognition.awards]]
 year  = "2023"
-title = "HTB University CTF — 10th worldwide"
-desc  = "10th of 100+ teams globally, with a live-TV interview to go with it."
+title = "HTB University CTF - 10th worldwide"
+desc  = "10th of 955 teams from 94 countries at Brains & Bytes, with a live-TV interview to go with it."
+
+[[home.recognition.awards]]
+year  = "Jan 2024"
+title = "US Cyber Games New Year Mayhem - 2nd"
+desc  = "Second place at HackTheBox's New Year Mayhem, playing as ECSC Team Greece."
 
 [[home.recognition.awards]]
 year  = "2023"
-title = "ECSC — Team Greece, 11th in Europe"
+title = "ECSC - Team Greece, 11th in Europe"
 desc  = "Qualified 3rd nationally, then placed 11th of 28 nations at the European Cyber Security Challenge in Hamar, Norway."
 
 [[home.recognition.awards]]
-year  = "2023 — 2025"
+year  = "2023 - 2025"
 title = "Academic top marks"
-desc  = "10/10 in Data Structures and Object-Oriented Programming; 8.5/10 in Cloud Computing and Parallel Computing."
+desc  = "10/10 in Data Structures and Object-Oriented Programming. 8.5/10 in Cloud Computing and Parallel Computing."
 
 # Contact
 
 [home.contact]
 title = "Let's talk."
 lede  = """
-I'm looking for systems, backend or full-stack roles where the hard part is
-actually hard. If that sounds like your team, I'd love to hear from you.
+I'm looking for SDE, systems and full-stack roles, internships included, where
+the interesting part is the engineering. Coursework is behind me, so I can
+start now. Say hi, and worst case you get a fast reply.
 """
 primary_label = "apparentlyplus@gmail.com"
 ghost_label   = "Résumé (PDF)"
@@ -337,7 +373,8 @@ ghost_label   = "Résumé (PDF)"
 
 [activity]
 title = "Activity"
-page_title = "Activity — Panagiotis Chatzikallias"
+page_title = "Activity"
+eyebrow = "Recent contributions & graphs"
 lede = """
 Everything below is pulled straight from the GitHub API and refreshed once a
 day. Nothing here is hand-maintained.
@@ -378,7 +415,7 @@ link  = "All on GitHub"
 [activity.open_source]
 title = "Open source"
 sub   = """
-Contributions to repositories that aren't mine — pull requests, issues and
+Contributions to repositories that aren't mine. Pull requests, issues and
 review threads, ranked by the size of the project.
 """
 flag_major = "major project"
@@ -393,8 +430,8 @@ sub   = "The last few things I opened, merged or weighed in on."
 # Pawstack Case Study (/pawstack)
 
 [pawstack]
-page_title = "PawStack — a toolchain where your program is the operating system"
-eyebrow = "Undergraduate thesis · University of Macedonia · written solo"
+page_title = "PawStack"
+eyebrow = "Undergraduate thesis · University of Macedonia"
 title   = "PawStack"
 tagline = "A toolchain where your program <em>is</em> the operating system."
 lede = """
@@ -425,16 +462,16 @@ value = "Feature complete"
 title = "The idea"
 body = """
 A general-purpose kernel pays for everything it might need. A heap allocator
-ships whether or not you allocate; a scheduler ships whether or not you ever
-spawn a thread. For a general OS that is the right trade. For an appliance —
-a device that runs exactly one program forever — it is pure overhead, and it
+ships whether or not you allocate, and a scheduler ships whether or not you
+ever spawn a thread. For a general OS that is the right trade. For an
+appliance that runs exactly one program forever, it is pure overhead, and it
 is overhead you cannot remove without becoming a kernel engineer.
 """
 body_2 = """
 PawStack removes it automatically. Because the compiler can see the whole
 program, it knows the exact set of capabilities that program uses. Everything
 else is dead weight, and dead weight does not get linked. You write
-application code; you get an operating system.
+application code and you get an operating system.
 """
 
 [pawstack.how]
@@ -449,12 +486,12 @@ hand.
 [[pawstack.how.steps]]
 step  = "01"
 title = "Parse and type-check"
-desc  = "Gata source becomes a typed AST. Static typing is what makes the rest of this possible — the compiler knows what every call resolves to."
+desc  = "Gata source becomes a typed AST. Static typing is what makes the rest of this possible, because the compiler knows what every call resolves to."
 
 [[pawstack.how.steps]]
 step  = "02"
 title = "Collect capabilities"
-desc  = "Lowering to IR records which kernel services each construct needs. Heap use marks the allocator; threading marks the scheduler; a draw call marks the display driver."
+desc  = "Lowering to IR records which kernel services each construct needs. Heap use marks the allocator, threading marks the scheduler, a draw call marks the display driver."
 
 [[pawstack.how.steps]]
 step  = "03"
@@ -489,7 +526,7 @@ role = "The frontend"
 meta = "Language design · 24-module stdlib"
 desc = """
 A statically-typed, object-oriented systems language. Static types are not
-decoration here — whole-program type information is what lets the compiler
+decoration here. Whole-program type information is what lets the compiler
 prove which kernel features a program can and cannot reach.
 """
 
@@ -516,11 +553,171 @@ primary_href  = "https://github.com/ApparentlyPlus/GatOS"
 ghost_label   = "Back home"
 ghost_href    = "/"
 
+# Security Page (/security)
+
+[security]
+page_title = "Security"
+eyebrow = "Competition · disclosure · challenge authoring"
+title   = "Security"
+tagline = "Before I started building things, I spent a while <em>breaking them</em>."
+lede = """
+It started with WannaCry in 2017 and a stack of books, turned into competing
+for Greece a few years later, and left me with the habit I still use every day:
+reading code for what the author assumed rather than for what they actually
+wrote.
+"""
+
+[[security.stats]]
+label = "Playing since"
+value = "2017"
+
+[[security.stats]]
+label = "ECSC, Europe"
+value = "11th"
+
+[[security.stats]]
+label = "HTB University CTF"
+value = "10 of 955"
+
+[[security.stats]]
+label = "MadMath rating"
+value = "4.9 / 5"
+
+[security.start]
+title = "Where it started"
+
+paras = [
+"""
+WannaCry, 2017. I was twelve. What caught me was not the malware so much as how
+little it took to knock over hospitals and rail networks in a single afternoon.
+I wanted to know how something that small breaks something that large, and then
+almost immediately I wanted to know how you stop it.
+""",
+"""
+I spent a while as a script kiddie, the way everyone does at the start. What
+got me out of it was a physical copy of Kali Linux Revealed, which happened to
+come out that same year, read front to back. Johnny Long's foreword opens with
+"You have no idea how good you have it," and he is right. I was born in 2005. I
+never had to write my own scanner to sweep a class A network and burn the
+results to a CD the way Jim Chapple did. I never waited on a Linux kernel to
+reach me on a disc passed hand to hand, or dug through BugTraq and AstaLaVista
+back when search engines were no help. Someone had already put all of it into
+one operating system for me, and I have never stopped being impressed by that.
+""",
+"""
+Nmap Network Scanning came next. Reading Fyodor explain, in his own words, how
+the tool he wrote actually works is still the closest thing to an
+apprenticeship I have had. None of it was applied to anything real for years. I
+was a kid with books. But it is where the rest of this came from.
+""",
+]
+
+[security.record]
+title = "The record"
+body = """
+Then it stopped being theoretical, in roughly this order.
+"""
+
+[[security.record.steps]]
+step  = "2023"
+title = "PMDK, 2nd nationwide"
+desc  = "A teacher asked whether I wanted to enter a competition run by the University of Piraeus. It was the year of my Panhellenic exams, so I agreed on one condition: strictly for fun, no preparation, no afternoons spent learning Coppersmith to break RSA with lattices. My schoolmates and I took 2nd. The team that beat us was effectively one person, going by saspect, who had dropped out of our own school the year before. We would have won with him."
+link = "https://github.com/UniPiSSL/pmdk-2023"
+link_label = "The competition"
+
+[[security.record.steps]]
+step  = "2023"
+title = "ECSC national qualifiers, 3rd"
+desc  = "PMDK got me into the national team's Discord, which is how I found out the qualifiers existed at all. I placed 3rd in the junior bracket. It would have been 2nd, but feasto took it back in the last few minutes."
+link = "https://ctf.hackthebox.com/event/details/htb-x-ecsc-2023-greek-qualifiers-juniors-946"
+link_label = "The qualifier"
+
+[[security.record.steps]]
+step  = "2023"
+title = "ECSC, Team Greece, 11th in Europe"
+desc  = "Came out of the bootcamp on the final team and competed in Hamar, Norway, where Greece finished 11th of 28 nations at the European Cyber Security Challenge."
+link = "https://ecsc.gr/index.php/en/team-greece-2023-en/"
+link_label = "The team"
+
+[[security.record.steps]]
+step  = "Dec 2023"
+title = "HTB University CTF, 10th worldwide"
+desc  = "Brains & Bytes, a zombie-apocalypse-themed CTF, 18 challenges across six categories. We finished 10th out of 955 teams from 94 countries, playing alongside people from the national team who had landed at the same university as me. It came with HTB swag and vouchers, and an interview on live television that I was not dressed for."
+link = "https://www.hackthebox.com/blog/HTB-university-CTF-2023-recap"
+link_label = "HackTheBox's recap"
+
+[[security.record.steps]]
+step  = "Jan 2024"
+title = "US Cyber Games New Year Mayhem, 2nd"
+desc  = "Second place at HackTheBox's New Year Mayhem, run with the US Cyber Games, playing as ECSC Team Greece."
+link = "https://x.com/USCyberGames/status/1752021311486873816"
+link_label = "The announcement"
+
+[[security.record.steps]]
+step  = "2024"
+title = "Qualifiers again, 6th"
+desc  = "I went back with no training at all, purely for the love of the game, and placed 6th. Then I handed my spot to a friend I had been playing with since PMDK. He was a year younger and in it for blood, and it was his turn."
+
+[security.now]
+title = "Where it is now"
+
+paras = [
+"""
+Competing well takes hours I stopped having. Finishing a degree a year early
+and writing a kernel for the thesis took most of them, and this is not a thing
+you can do halfway, so I stepped back rather than keep showing up
+underprepared.
+""",
+"""
+The instinct stayed, and in 2025 it found something. An authorization flaw in
+Unistudents, a university dashboard app with more than 100k downloads, sitting
+in a path that could have cost its sponsors real money. I reported it to the
+vendor, worked the fix through with them, and filed with MITRE. The CVE is
+approved and waiting on publication, which is the only reason there is no
+writeup on this page yet.
+""",
+"""
+The OSCP and the rest of the OffSec track are what I want next, and the honest
+answer on timing is that it depends on where I land, because I would rather
+work through them alongside a job than in the gap before one. None of it is
+sitting idle in the meantime. Reading your own code for what you assumed rather
+than for what you wrote is the same skill pointed inward, and it is most of
+what I mean when I say I ship secure software.
+""",
+]
+
+[security.work]
+title = "Writing them instead of solving them"
+sub   = "The one piece of all this you can go and try yourself."
+
+[[security.work.pieces]]
+name = "MadMath"
+role = "Published challenge"
+meta = "Cryptography · HackTheBox"
+desc = """
+A cryptography challenge I wrote and HackTheBox paid to publish. It sits on the
+live platform, 339 people have solved it, and 119 of them rated it 4.9 out of
+5. Writing a challenge turns out to be the other half of learning to solve
+them, because you have to be certain there is exactly one way in.
+"""
+link = "https://app.hackthebox.com/challenges/MadMath"
+link_label = "Solve it"
+
+[security.close]
+title = "Found something?"
+body = """
+If you have a finding on anything I've built, or you just want to talk about
+work in this space, email is the fastest way to reach me.
+"""
+primary_label = "apparentlyplus@gmail.com"
+ghost_label   = "Back home"
+ghost_href    = "/"
+
 # 404
 
 [not_found]
-page_title = "404 — Panagiotis Chatzikallias"
+page_title = "404"
 code = "404"
-message = "This page didn't compile."
-sub = "// no such route in the build"
+message = "There's nothing here."
+sub = "// maybe there will be one day. maybe not."
 back = "↩ Back home"

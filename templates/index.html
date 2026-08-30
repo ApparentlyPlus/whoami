@@ -67,6 +67,37 @@
     {% endif %}
 </section>
 
+<!-- Upstream -->
+{% set u = h.upstream %}
+{% if highlight %}
+<section class="section" id="upstream">
+    {{ m.section_head(u.index, u.title, u.sub) }}
+
+    <article class="upstream reveal">
+        <div class="upstream-main">
+            <a class="upstream-repo mono" href="{{ highlight.repo_url }}" target="_blank" rel="noopener noreferrer">
+                <span class="oss-org">{{ highlight.owner }}/</span>{{ highlight.name }}
+                <span class="arr">↗</span>
+            </a>
+            <h3 class="upstream-title">{{ highlight.title }}</h3>
+            <p class="upstream-body">{{ highlight.body }}</p>
+            <div class="upstream-actions">
+                <a class="btn btn-primary" href="{{ highlight.url }}" target="_blank" rel="noopener noreferrer">{{ u.link_label }} <span class="arr">↗</span></a>
+                <a class="btn btn-ghost" href="{{ u.more_href }}">{{ u.more_label }} <span class="arr">→</span></a>
+            </div>
+        </div>
+        <div class="upstream-figures">
+            {{ m.figure(u.label_stars, highlight.stars | commas) }}
+            {% if highlight.contributors %}{{ m.figure(u.label_contributors, highlight.contributors | commas) }}{% endif %}
+            <div class="figure">
+                <span class="label">{{ u.label_state }}</span>
+                <span class="readout readout-{{ highlight.state_word }}">{{ highlight.state_word | capitalize }}</span>
+            </div>
+        </div>
+    </article>
+</section>
+{% endif %}
+
 <!-- Work -->
 <section class="section" id="work">
     {{ m.section_head(h.work.index, h.work.title, h.work.sub) }}
@@ -117,37 +148,6 @@
     </div>
 </section>
 
-<!-- Upstream -->
-{% set u = h.upstream %}
-{% if highlight %}
-<section class="section" id="upstream">
-    {{ m.section_head(u.index, u.title, u.sub) }}
-
-    <article class="upstream reveal">
-        <div class="upstream-main">
-            <a class="upstream-repo mono" href="{{ highlight.repo_url }}" target="_blank" rel="noopener noreferrer">
-                <span class="oss-org">{{ highlight.owner }}/</span>{{ highlight.name }}
-                <span class="arr">↗</span>
-            </a>
-            <h3 class="upstream-title">{{ highlight.title }}</h3>
-            <p class="upstream-body">{{ highlight.body }}</p>
-            <div class="upstream-actions">
-                <a class="btn btn-primary" href="{{ highlight.url }}" target="_blank" rel="noopener noreferrer">{{ u.link_label }} <span class="arr">↗</span></a>
-                <a class="btn btn-ghost" href="{{ u.more_href }}">{{ u.more_label }} <span class="arr">→</span></a>
-            </div>
-        </div>
-        <div class="upstream-figures">
-            {{ m.figure(u.label_stars, highlight.stars | commas) }}
-            {% if highlight.contributors %}{{ m.figure(u.label_contributors, highlight.contributors | commas) }}{% endif %}
-            <div class="figure">
-                <span class="label">{{ u.label_state }}</span>
-                <span class="readout readout-{{ highlight.state_word }}">{{ highlight.state_word | capitalize }}</span>
-            </div>
-        </div>
-    </article>
-</section>
-{% endif %}
-
 <!-- Activity Strip -->
 {% if gh %}
 {% set a = h.activity_strip %}
@@ -195,6 +195,9 @@
 <!-- Recognition -->
 <section class="section" id="recognition">
     {{ m.section_head(h.recognition.index, h.recognition.title, h.recognition.sub) }}
+
+    {% if h.recognition.note %}<p class="section-note reveal">{{ h.recognition.note }}</p>{% endif %}
+
     <div class="award-grid">
         {% for a in h.recognition.awards %}
         <div class="award reveal">
@@ -204,6 +207,8 @@
         </div>
         {% endfor %}
     </div>
+
+    <a class="section-more reveal" href="{{ h.recognition.link_href }}">{{ h.recognition.link_label }} <span class="arr">&#8594;</span></a>
 </section>
 
 <!-- Contact -->

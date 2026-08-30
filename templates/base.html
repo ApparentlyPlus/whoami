@@ -96,7 +96,7 @@
 
 <footer class="site-footer">
     <div class="footer-inner">
-        <div class="footer-tag">{{ footer.tagline }}</div>
+        <div class="footer-tag">{{ footer.tagline | safe }}</div>
         <div class="footer-links">
             {% for l in footer.links %}
             <a href="{{ l.href }}"{% if l.href.startswith('http') %} target="_blank" rel="noopener noreferrer"{% endif %}>{{ l.label }}</a>

@@ -219,6 +219,12 @@ def pawstack():
     return render_template('pawstack.html', gh=gh, repos=repos, page='pawstack')
 
 
+@app.route('/security')
+def security():
+    gh, repos = _github()
+    return render_template('security.html', gh=gh, repos=repos, page='security')
+
+
 @app.route('/api/github.json')
 def github_json():
     snapshot = github_sync.get()
