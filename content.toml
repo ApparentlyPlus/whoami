@@ -176,14 +176,18 @@ desc = "The compiler: a real frontend, IR and backend on .NET 10 AOT. Emits C, b
 meta = "C# · .NET 10 AOT"
 
 [[home.work.projects]]
-title = "Intellectiva AI - Athens transit"
+title = "Athens transit crowding model"
 badge = "2nd place"
 badge_style = "award"
 desc = """
-AI-driven transit optimization. A regression model predicts passenger flow from
-open data so trains can be re-timed against subway congestion. Python and ONNX
-on the inference side, Node.js for the real-time frontend. It took 2nd at the
-Apps4Athens hackathon, and we're in talks with OASA about a pilot.
+Predicts how full Athens trains will be from open transit data, so services can
+be re-timed against congestion. A regression model in Python and ONNX on the
+inference side, Node.js for the real-time frontend. Built with two friends for
+Apps4Athens 2025, where it took 2nd of 40+ teams. We're in discussion with OASA,
+the Athens transport authority, about testing it internally against their own
+data. Separately, I built a prototype Small Language Model pipeline that
+answers weather questions over Meta's messaging APIs and demoed it to Meteo. It
+hasn't gone further.
 """
 tags = ["Full-stack", "ML · ONNX"]
 link = "https://github.com/Apps4Athens-Hackathon-2-0/53_Intellectiva"
@@ -282,6 +286,16 @@ title = "Experience"
 sub   = "The work that left my own machine."
 
 [[home.experience.roles]]
+period = "2026"
+role   = "Challenge Author"
+org    = "HackTheBox · paid contract"
+desc = """
+HackTheBox paid me to write and publish MadMath, a cryptography challenge that
+now sits on the live platform. 339 people have solved it and 119 have rated it,
+averaging 4.9 out of 5.
+"""
+
+[[home.experience.roles]]
 period = "2025"
 role   = "Responsible Disclosure"
 org    = "Unistudents · coordinated via MITRE"
@@ -290,18 +304,6 @@ Found a critical authorization flaw in a university dashboard app with more
 than 100k downloads, in a path that could have cost its sponsors real money. I
 reported it, worked the fix through with the vendor, and filed with MITRE. The
 CVE is approved and waiting on publication.
-"""
-
-[[home.experience.roles]]
-period = "2025 - present"
-role   = "Co-Founder & Engineer"
-org    = "Intellectiva AI"
-desc = """
-A company two friends and I started after our transit prototype took 2nd at
-Apps4Athens. I do the engineering: the transit model itself, and a Small
-Language Model pipeline we're building for Greece's biggest weather service,
-wired into Meta's messaging APIs. The OASA pilot is still a conversation, not
-a contract.
 """
 
 # Recognition
@@ -331,7 +333,7 @@ desc  = "The full curriculum done in three years, thesis written, GPA 8.3 / 10. 
 [[home.recognition.awards]]
 year  = "Nov 2025"
 title = "Apps4Athens - 2nd place"
-desc  = "Silver for our AI transit prototype, and a direct line to OASA out of it."
+desc  = "Silver for our AI transit prototype, which opened a conversation with OASA."
 
 [[home.recognition.awards]]
 year  = "2025"
